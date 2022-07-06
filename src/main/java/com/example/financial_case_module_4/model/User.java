@@ -21,6 +21,8 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private String confirmPassword;
+
+    private String avatar = "https://png.pngtree.com/png-vector/20220610/ourmid/pngtree-hacker-or-anonymous-mask-icon-in-cartoon-style-isolated-on-background-png-image_4959250.png";
     private boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -73,6 +75,14 @@ public class User implements Serializable {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Set<Role> getRoles() {
