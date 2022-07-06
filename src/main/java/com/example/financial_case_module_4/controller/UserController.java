@@ -1,4 +1,4 @@
-package com.example.financial_case_module_4.controlle;
+package com.example.financial_case_module_4.controller;
 import com.example.financial_case_module_4.model.JwtResponse;
 import com.example.financial_case_module_4.model.Role;
 import com.example.financial_case_module_4.model.User;
