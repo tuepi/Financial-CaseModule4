@@ -10,4 +10,5 @@ public interface ITransactionService extends IGeneralService<Transaction> {
     Iterable<Transaction>findAllByCreatedDateBetween(LocalDateTime fromTime,LocalDateTime twoTime);
     Iterable<Transaction>findAllByWallet(Wallet wallet);
     Iterable<Transaction>findAllByWalletAndCreatedDateBetween(Long wallet_id,LocalDateTime fromTime,LocalDateTime twoTime);
+    int getMoneyCategoryByTransactionId(Long transaction_id);
 }
