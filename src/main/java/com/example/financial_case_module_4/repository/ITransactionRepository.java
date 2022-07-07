@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @Repository
 
 public interface ITransactionRepository extends JpaRepository<Transaction, Long> {
-    Iterable<Transaction> findAllByCreatedDateBetween(LocalDateTime fromTime, LocalDateTime twoTime);
+    Iterable<Transaction> findAllByCreatedDateBetween(LocalDateTime fromTime, LocalDateTime toTime);
     Iterable<Transaction> findAllByWallet(Wallet wallet);
-    Iterable<Transaction> findAllByWalletAndCreatedDateBetween(Long wallet_id,LocalDateTime fromTime,LocalDateTime twoTime);
+    Iterable<Transaction> findAllByWalletAndCreatedDateBetween(Long wallet_id,LocalDateTime fromTime,LocalDateTime toTime);
 
 
 

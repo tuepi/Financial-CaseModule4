@@ -28,16 +28,16 @@ public class TransactionService implements ITransactionService{
         transactionRepository.deleteById(id);
     }
 
-    public Iterable<Transaction> findAllByCreatedDateBetween(LocalDateTime fromTime, LocalDateTime twoTime) {
-        return transactionRepository.findAllByCreatedDateBetween(fromTime,twoTime);
+    public Iterable<Transaction> findAllByCreatedDateBetween(LocalDateTime fromTime, LocalDateTime toTime) {
+        return transactionRepository.findAllByCreatedDateBetween(fromTime,toTime);
     }
 
     public Iterable<Transaction> findAllByWallet(Wallet wallet) {
         return transactionRepository.findAllByWallet(wallet);
     }
 
-    public Iterable<Transaction> findAllByWalletAndCreatedDateBetween(Long wallet_id, LocalDateTime fromTime, LocalDateTime twoTime) {
-        return transactionRepository.findAllByWalletAndCreatedDateBetween(wallet_id,fromTime,twoTime);
+    public Iterable<Transaction> findAllByWalletAndCreatedDateBetween(Long wallet_id, LocalDateTime fromTime, LocalDateTime toTime) {
+        return transactionRepository.findAllByWalletAndCreatedDateBetween(wallet_id,fromTime,toTime);
     }
 
     public int getMoneyCategoryByTransactionId(Long transaction_id) {
