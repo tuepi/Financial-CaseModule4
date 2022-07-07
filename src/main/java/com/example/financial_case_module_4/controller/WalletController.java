@@ -66,4 +66,20 @@ public class WalletController {
         walletService.remove(id);
         return new ResponseEntity<>(walletOptional.get(), HttpStatus.NO_CONTENT);
     }
+    @GetMapping("/findAllByName")
+    public ResponseEntity<Iterable<Wallet>>findAllByNameContaining(@RequestParam String name){
+        List<Wallet> wallets = (List<Wallet>) walletService.findAllByNameContaining(name);
+        if (wallets.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(wallets, HttpStatus.OK);
+    }
+    @GetMapping("/findAllByUser")
+    public ResponseEntity<Iterable<Wallet>>findAllByUserContaining(@RequestParam User user){
+        List<Wallet> wallets = (List<Wallet>) walletService.findAllByUserContaining(user);
+        if (wallets.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(wallets, HttpStatus.OK);
+    }
 }
