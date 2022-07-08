@@ -1,9 +1,8 @@
-package com.example.financial_case_module_4.service.impl;
+package com.example.financial_case_module_4.service.login;
 
 
 import com.example.financial_case_module_4.model.Role;
 import com.example.financial_case_module_4.repository.RoleRepository;
-import com.example.financial_case_module_4.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

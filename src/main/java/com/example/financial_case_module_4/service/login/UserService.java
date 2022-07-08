@@ -1,4 +1,4 @@
-package com.example.financial_case_module_4.service;
+package com.example.financial_case_module_4.service.login;
 
 
 import com.example.financial_case_module_4.model.User;

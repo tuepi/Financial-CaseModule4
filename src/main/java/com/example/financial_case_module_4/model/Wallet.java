@@ -20,6 +20,14 @@ public class Wallet {
     public Wallet() {
     }
 
+    public Wallet( String name, double moneyAmount, String icon, MoneyType moneyType, User user) {
+        this.name = name;
+        this.moneyAmount = moneyAmount;
+        this.icon = icon;
+        this.moneyType = moneyType;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }

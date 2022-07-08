@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+            crossorigin="anonymous"></script>
+
+    <script>
+
+        //BE SURE TO PROTECT EVERYTHING IN THE CONFIG
+        //DON'T COMMIT IT!!!
+
+        // Initialize Firebase
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCRmRUfBSuLx1aG6VPPGte-Apzg3gsOdD8",
+            authDomain: "ducthuan.firebaseapp.com",
+            projectId: "ducthuan",
+            storageBucket: "ducthuan.appspot.com",
+            messagingSenderId: "105940412277",
+            appId: "1:105940412277:web:7db616fdaf23055245953c",
+            measurementId: "G-312SC4N6W2"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+</head>
+<body>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm">
+                    <label> name:</label>
+                    <input type="text" name="name" class="form-control" id="name">
+                    <label> address:</label>
+                    <input type="text" name="moneyAmount" class="form-control" id="moneyAmount">
+                    <label> numberOfBedrooms:</label>
+
+
+                    <label> image:</label>
+<!--                    <input type="file" name="file" class=form-control >-->
+
+                    <input type="file" value="upload" accept=".jpg; .jpeg" id="fileButton" onchange="upload(event)">
+                    <select id="orderId1" name="orderId"  class="form-control">
+
+                    </select>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="save()"> Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm1">
+                    <label> name:</label>
+                    <br>
+                    <input type="text" name="username" id="username" >
+                    <br>
+                    <label> pass:</label>
+                    <br>
+                    <input type="password" name="password" id="password">
+                    <br>
+                    <label> confirmPassword:</label>
+                    <br>
+                    <input type="password" name="confirmPassword" id="confirmPassword">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="register()"> register</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <label> name:</label>
+                    <br>
+                    <input type="text" name="username" id="username1" >
+                    <br>
+                    <label> pass:</label>
+                    <br>
+                    <input type="password" name="password" id="password1">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="login()"> Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="main">
+</div>
+<script>
+    function loadHome() {
+        document.getElementById('main').innerHTML = `<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="showAddForm()">ADD</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="showRegister()">Register</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" onclick="loginForm()">Login</a>
+                        </li>
+
+                    </ul>
+                    <div class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search-name">
+                        <button class="btn btn-outline-success my-2 my-sm-0" onclick="search()">Search</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+                       <button class="btn btn-outline-success my-2 my-sm-0" onclick="productform()">PRODUCT</button>
+<!--    <div class="row">-->
+<!--        <div class="col-3">List</div>-->
+<!--        <div class="col-9">-->
+<!--            <h3>List Home</h3>-->
+
+<!--            <table class="table">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th scope="col">stt</th>-->
+<!--                    <th scope="col">name</th>-->
+<!--                    <th scope="col">address</th>-->
+<!--                    <th scope="col">numberOfBedrooms</th>-->
+<!--                    <th scope="col">numberOfBathrooms</th>-->
+<!--                    <th scope="col">price</th>-->
+<!--                    <th scope="col">img</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody id="list">-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--        <div id="pageable"></div>-->
+<!--    </div>-->
+</div>`
+    }
+    loadHome();
+</script>
+<script src="wallet.js"></script>
+<script src="user.js"></script>
+<script src="login_page.js"></script>
+
+</body>
+</html>

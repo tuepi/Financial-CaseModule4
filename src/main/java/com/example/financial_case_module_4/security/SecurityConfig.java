@@ -4,8 +4,8 @@ package com.example.financial_case_module_4.security;
 import com.example.financial_case_module_4.security.jwt.CustomAccessDeniedHandler;
 import com.example.financial_case_module_4.security.jwt.JwtAuthenticationFilter;
 import com.example.financial_case_module_4.security.jwt.RestAuthenticationEntryPoint;
-import com.example.financial_case_module_4.service.UserService;
-import com.example.financial_case_module_4.service.impl.UserServiceImpl;
+import com.example.financial_case_module_4.service.login.UserService;
+import com.example.financial_case_module_4.service.login.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -72,7 +72,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/**");
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http.authorizeRequests()
-                .antMatchers("/login", "/register", "/hello").permitAll()
+                .antMatchers("/login", "/register", "/hello","/transactions/**","/wallets/**").permitAll()
                 .antMatchers("/users/**").access("hasRole('ROLE_USER')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 //                .antMatchers(HttpMethod.GET
