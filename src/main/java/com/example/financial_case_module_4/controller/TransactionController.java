@@ -48,13 +48,15 @@ public class TransactionController {
     public ResponseEntity<Transaction> saveTransaction(@RequestBody Transaction transaction) {
         Wallet wallet=walletService.findById(transaction.getWallet().getId()).get();
         MoneyDetail moneyDetail=moneyDetailService.findById(transaction.getMoneyDetail().getId()).get();
-        if(transactionService.getMoneyCategoryByTransactionId(transaction.getId())==1) {
+        Integer a = transactionService.getMoneyCategoryByTransactionId(transaction.getId());
+        if(a==1) {
             wallet.setMoneyAmount(wallet.getMoneyAmount() - transaction.getMoneyAmount());
         }else {
             wallet.setMoneyAmount(wallet.getMoneyAmount() + transaction.getMoneyAmount());
         }
         walletService.save(wallet);
         moneyDetailService.save(moneyDetail);
+
         return new ResponseEntity<>(transactionService.save(transaction), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
