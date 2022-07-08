@@ -34,4 +34,9 @@ public class WalletService implements IWalletService{
     public Iterable<Wallet> findAllByUserContaining(User user) {
         return walletRepository.findAllByUserContaining(user);
     }
+
+    @Override
+    public Iterable<Wallet> findAllByUserId(Long id) {
+        return walletRepository.findAllByUserId(id);
+    }
 }
