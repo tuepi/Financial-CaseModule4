@@ -7,4 +7,5 @@ import com.example.financial_case_module_4.service.IGeneralService;
 public interface IWalletService extends IGeneralService<Wallet> {
     Iterable<Wallet>findAllByNameContaining(String name);
     Iterable<Wallet>findAllByUserContaining(User user);
+    Iterable<Wallet>findAllByUserId(Long id);
 }

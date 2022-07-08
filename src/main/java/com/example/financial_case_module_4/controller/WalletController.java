@@ -3,6 +3,7 @@ package com.example.financial_case_module_4.controller;
 import com.example.financial_case_module_4.model.MoneyType;
 import com.example.financial_case_module_4.model.User;
 import com.example.financial_case_module_4.model.Wallet;
+import com.example.financial_case_module_4.security.jwt.JwtAuthenticationFilter;
 import com.example.financial_case_module_4.service.login.UserService;
 import com.example.financial_case_module_4.service.moneyType.IMoneyTypeService;
 import com.example.financial_case_module_4.service.wallet.IWalletService;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +21,20 @@ import java.util.Optional;
 @RequestMapping("/wallets")
 public class WalletController {
     @Autowired
-    IWalletService walletService;
+    IWalletService   walletService;
     @Autowired
     UserService userService;
     @Autowired
+    JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
     IMoneyTypeService moneyTypeService;
+
+    @GetMapping("/users/findByUser/{id}")
+    public ResponseEntity<Iterable<Wallet>> findAllByAppUserId(@PathVariable Long id) {
+        Iterable<Wallet> wallets = walletService.findAllByUserId(id);
+        return new ResponseEntity<>(wallets, HttpStatus.OK);
+    }
     @GetMapping
     public ResponseEntity<Iterable<Wallet>> findAllWallet() {
         List<Wallet> wallets = (List<Wallet>) walletService.findAll();
