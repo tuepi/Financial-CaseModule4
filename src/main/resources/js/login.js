@@ -1,7 +1,6 @@
-let token = window.sessionStorage.getItem("TOKEN_KEY");
-let name = window.sessionStorage.getItem("NAME_KEY");
+
 function showLogin() {
-    if (token == null) {
+    if (window.sessionStorage.getItem("TOKEN_KEY") == null) {
         $("#modalLoginForm").modal('show');
     }
 }
@@ -66,6 +65,7 @@ function register() {
                 document.getElementById('status').innerHTML = 'Create User Account Success!'
                 document.getElementById("status").style.color = "green";
             }
+            $("#modalRegisterForm").modal('hide');
             $("#modalLoginForm").modal('show');
         }
     })
@@ -90,7 +90,7 @@ function change_pass() {
     console.log("changPASSform=",changePasswordForm)
     $.ajax({
         headers:{
-            Authorization: 'Bearer ' + token
+            Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY")
         },
         url: 'http://localhost:8081/users/change-password',
         method: 'PUT',
@@ -111,9 +111,9 @@ function change_pass() {
 
 
 function profile() {
-    if (token != null) {
+    if (window.sessionStorage.getItem("TOKEN_KEY") != null) {
         document.getElementById("profile").innerHTML = `<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false"><i class="fa " > ${name} </i> </a>
+                           aria-haspopup="true" aria-expanded="false"><i class="fa " > ${window.sessionStorage.getItem("NAME_KEY")} </i> </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-cyan"
                              aria-labelledby="navbarDropdownMenuLink-4" id="">
                             <a class="dropdown-item" data-target="#modalLoginForm" onclick="logout()">Logout</a>

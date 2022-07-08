@@ -94,10 +94,18 @@ h1, h2, h3, h4, h5,
 .wrapper {
   width: 100%;
 }
+.container-fluid {
+	width: 100%;
+	padding-right: 10px;
+	padding-left: 10px;
+	margin-right: auto;
+	margin-left: auto;
+}
 
 #sidebar {
   min-width: 300px;
   max-width: 300px;
+	height: 100px;
   background: #1d1919;
   color: #fff;
   transition: all 0.3s;

@@ -1,8 +1,9 @@
+/*
 function showHomepage() {
     document.getElementById("container").innerHTML =
         `<div class="container-fluid">
 <nav class="navbar navbar-toggleable-sm navbar-light bg-faded fixed-top">
-    
+
    <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
    </button>
@@ -33,8 +34,8 @@ function showHomepage() {
     </form>
    </div>
   </nav>
-    
-    
+
+
   <nav class="sidebar" data-toggle="pill">
    <ul class="nav">
 <li class="nav-profile">
@@ -47,7 +48,7 @@ Your Name
 </div>
 </li>
 </ul>
-    
+
    <ul class="nav flex-column">
     <li class="nav-header active">Navigation</li>
     <li class="nav-item">
@@ -68,7 +69,7 @@ Your Name
 
     <li class="nav-item has-sub">
      <a class="nav-link" data-toggle="collapse" href="#sub1" aria-expanded="false" aria-controls="sub1">
-<i class="fa fa-align-left"></i> 
+<i class="fa fa-align-left"></i>
 menu level 1
 </a>
      <ul class="sub collapse" id="sub1">
@@ -95,10 +96,10 @@ menu level 1.1
       </li>
 </ul>
     </li>
-    
+
     <li class="nav-item has-sub">
      <a class="nav-link" data-toggle="collapse" href="#sub3" aria-expanded="false" aria-controls="sub3">
-<i class="fa fa-align-left"></i> 
+<i class="fa fa-align-left"></i>
   menu level 1
  </a>
      <ul class="sub collapse" id="sub3">
@@ -125,7 +126,7 @@ menu level 1.1
       </li>
  </ul>
     </li>
-     
+
     <li class="">
      <a class="sidebar-minify" href="javascript:;">
       <i class="fa fa-angle-double-left"></i>
@@ -135,4 +136,55 @@ menu level 1.1
    </ul>
   </nav>
 </div>`
+}*/
+$.ajax({
+    headers: {
+        Authorization: 'Bearer ' + token,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    type: "GET",
+    url: "http://localhost:8000/wallets/"+id,
+    success: function (data) {
+        let content = ``;
+        for (let i = 0; i < data.length; i++) {
+            content += `  <div  class="col-lg-4 col-md-12">
+                        <div class="white-box analytics-info">
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                   <h1 class="box-title"><a href="#" onclick="findAllTransactionByWallet(${data[i].id})">${data[i].name}</a></h1>
+                                
+                                </li>
+                                <li class="ms-auto"><span style="font-size: large" class="counter text-success">${data[i].moneyType.name}</span></li>
+                            </ul>
+                            
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                    <div><img width="100px" height="70" src="/chart.png">
+                                    </div>
+                                </li>
+                                <li class="ms-auto"><span class="counter text-danger">${data[i].moneyAmount.toLocaleString()}</span></li>
+                            </ul>
+                        </div>
+                        </div>
+                     `
+        }
+        document.getElementById("display").innerHTML = content;
+    }, error: function (error) {
+        console.log(error);
+    }
+})
+function findAllTransactionByWallet(id) {
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8081/wallets/transaction-by-wallet/" + id,
+        success: function (data) {
+            localStorage.setItem("data", JSON.stringify(data));
+            window.location.href = "../transaction/transaction.html"
+        }, error: function (error) {
+            console.log(error);
+        }
+    })
+
 }

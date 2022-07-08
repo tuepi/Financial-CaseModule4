@@ -131,7 +131,25 @@
             </div>
         </nav>
 
-        <h2 class="mb-4">Sidebar #01</h2>
+        <div class="container">
+            <div id="display" >
+
+              <!--  <div  class="col-lg-4 col-md-12" style="background-color: #f3eded; height: 250px">
+                    <div class="white-box analytics-info" style="background-color: #ffe8a1">
+                        <h3 class="box-title" style="text-align: center">Total Visit</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <div id="sparklinedash">
+                                    <canvas width="67" height="100" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;">
+                                </canvas>
+                                </div>
+                            </li>
+                            <li class="ms-auto"><span class="counter text-success">ryhdfj</span></li>
+                        </ul>
+                    </div>
+                </div>-->
+            </div>
+        </div>
     </div>
 </div>
 
@@ -220,8 +238,63 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
 <script src="../js/login.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+<script >
+    $.ajax({
+        headers: {
+            Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: "GET",
+        url: "http://localhost:8000/wallets/users/findByUser/" + window.sessionStorage.getItem("ID_USER_KEY"),
+        success: function (data) {
+            console.log(data)
+            let content = ``;
+            for (let i = 0; i < data.length; i++) {
+                content += `<div  class="col-lg-4 col-md-12">
+                        <div class="white-box analytics-info">
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                   <h1 class="box-title"><a style="text-align: center" href="#" onclick="findAllTransactionByWallet(${data[i].id})">${data[i].name}</a></h1>
 
+                                </li>
+                                <li class="ms-auto"><span style="font-size: large" class="counter text-success"></span></li>
+                            </ul>
+
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                    <div><img width="100px" height="70" src="/chart.png">
+                                    </div>
+                                </li>
+                                <li class="ms-auto"><span class="counter text-danger">${data[i].moneyAmount.toLocaleString()}</span></li>
+                            </ul>
+                        </div>
+                        </div>
+                     `
+            }
+                console.log(content)
+            document.getElementById("display").innerHTML = content;
+        }, error: function (error) {
+            console.log(error);
+        }
+    })
+    function findAllTransactionByWallet(id) {
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8081/wallets/transaction-by-wallet/" + id,
+            success: function (data) {
+                localStorage.setItem("data", JSON.stringify(data));
+                window.location.href = "../transaction/transaction.html"
+            }, error: function (error) {
+                console.log(error);
+            }
+        })
+
+    }
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
 <script>
     profile()
 </script>
