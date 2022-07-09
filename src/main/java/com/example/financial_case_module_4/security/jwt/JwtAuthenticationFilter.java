@@ -1,7 +1,7 @@
 package com.example.financial_case_module_4.security.jwt;
 
-import com.example.financial_case_module_4.service.UserService;
-import com.example.financial_case_module_4.service.impl.JwtService;
+import com.example.financial_case_module_4.service.login.UserService;
+import com.example.financial_case_module_4.service.login.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,7 +45,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);
 	}
 
-	private String getJwtFromRequest(HttpServletRequest request) {
+	public String getJwtFromRequest(HttpServletRequest request) {
 		String authHeader = request.getHeader("Authorization");
 
 		if (authHeader != null && authHeader.startsWith("Bearer ")) {

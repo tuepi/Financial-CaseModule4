@@ -1,10 +1,11 @@
 package com.example.financial_case_module_4.controller;
+
 import com.example.financial_case_module_4.model.JwtResponse;
 import com.example.financial_case_module_4.model.Role;
 import com.example.financial_case_module_4.model.User;
-import com.example.financial_case_module_4.service.RoleService;
-import com.example.financial_case_module_4.service.UserService;
-import com.example.financial_case_module_4.service.impl.JwtService;
+import com.example.financial_case_module_4.service.login.RoleService;
+import com.example.financial_case_module_4.service.login.UserService;
+import com.example.financial_case_module_4.service.login.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -52,6 +53,7 @@ public class    UserController {
         Iterable<User> users = userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
     @GetMapping("/admin/users")
     public ResponseEntity<Iterable<User>> showAllUserByAdmin() {
         Iterable<User> users = userService.findAll();
@@ -83,28 +85,25 @@ public class    UserController {
             roles1.add(role1);
             user.setRoles(roles1);
         }
+        user.setAvatar("https://png.pngtree.com/png-vector/20220610/ourmid/pngtree-hacker-or-anonymous-mask-icon-in-cartoon-style-isolated-on-background-png-image_4959250.png");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setConfirmPassword(passwordEncoder.encode(user.getConfirmPassword()));
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User currentUser = userService.findByUsername(user.getUsername());
-        return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getAvatar(), userDetails.getAuthorities()));
     }
 
-    @GetMapping("/hello")
-    public ResponseEntity<String> hello(){
-        return new ResponseEntity("Hello World", HttpStatus.OK);
-    }
 
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getProfile(@PathVariable Long id) {
@@ -114,18 +113,30 @@ public class    UserController {
 
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUserProfile(@PathVariable Long id, @RequestBody User user) {
-        Optional<User> userOptional = this.userService.findById(id);
-        if (!userOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        Optional<User> userOptional = this.userService.findById(id);
+//        if (!userOptional.isPresent()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        if (userOptional.get().)
+//        user.setId(userOptional.get().getId());
+//        user.setUsername(userOptional.get().getUsername());
+//        user.setEnabled(userOptional.get().isEnabled());
+//        user.setRoles(userOptional.get().getRoles());
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setConfirmPassword(user.getPassword());
+//        userService.save(user);
+        user.setId(id);
+        user.setRoles(userService.findById(id).get().getRoles());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUsername(userService.findById(id).get().getUsername());
+        user.setConfirmPassword(user.getPassword());
+        if (user.getAvatar()==null){
+            user.setAvatar(userService.findById(id).get().getAvatar());
+            userService.save(user);
         }
-        user.setId(userOptional.get().getId());
-        user.setUsername(userOptional.get().getUsername());
-        user.setEnabled(userOptional.get().isEnabled());
-        user.setPassword(userOptional.get().getPassword());
-        user.setRoles(userOptional.get().getRoles());
-        user.setConfirmPassword(userOptional.get().getConfirmPassword());
-
-        userService.save(user);
+        else {
+            userService.save(user);
+        }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
