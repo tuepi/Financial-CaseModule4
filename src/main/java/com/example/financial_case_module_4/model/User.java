@@ -21,6 +21,8 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private String confirmPassword;
+
+    private String avatar;
     private boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -73,6 +75,14 @@ public class User implements Serializable {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Set<Role> getRoles() {

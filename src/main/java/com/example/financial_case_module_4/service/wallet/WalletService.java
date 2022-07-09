@@ -6,6 +6,7 @@ import com.example.financial_case_module_4.repository.IWalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class WalletService implements IWalletService{
@@ -29,10 +30,6 @@ public class WalletService implements IWalletService{
 
     public Iterable<Wallet> findAllByNameContaining(String name) {
         return walletRepository.findAllByNameContaining(name);
-    }
-
-    public Iterable<Wallet> findAllByUserContaining(User user) {
-        return walletRepository.findAllByUserContaining(user);
     }
 
     @Override
