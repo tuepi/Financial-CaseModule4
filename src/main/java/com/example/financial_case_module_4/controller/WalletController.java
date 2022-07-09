@@ -85,14 +85,7 @@ public class WalletController {
         }
         return new ResponseEntity<>(wallets, HttpStatus.OK);
     }
-    @GetMapping("/findAllByUser")
-    public ResponseEntity<Iterable<Wallet>>findAllByUserContaining(@RequestParam User user){
-        List<Wallet> wallets = (List<Wallet>) walletService.findAllByUserContaining(user);
-        if (wallets.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(wallets, HttpStatus.OK);
-    }
+
     @GetMapping("/users/showMoneyType")
     public ResponseEntity<Iterable<MoneyType>> showMoneyType() {
         Iterable<MoneyType> moneyTypes = moneyTypeService.findAll();

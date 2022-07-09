@@ -104,6 +104,7 @@
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Add</a>
+
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Laptops</a>
@@ -188,7 +189,7 @@
         </div>
     </div>
 </div>
-<!--register modal-->
+
 <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -222,45 +223,39 @@
         </div>
     </div>
 </div>
+
 <!--edit modal-->
-<div class="modal fade" id="modalEditForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="modalEditWalletForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="border-radius: 20px">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Edit</h4>
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Create Wallet</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" onclick="resetValue()">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body mx-3">
-                <input type="hidden" id="id" name="id">
                 <div class="md-form mb-5">
                     <i class="fas fa-user prefix grey-text"></i>
-                    <span id="usernameEdit" class="form-control validate"
-                          style="color: #28b498;margin-left: 3rem;width: 92%;"></span>
+                    <input type="text" id="editMoneyAmount" class="form-control validate" placeholder="Money Amount" style="color: #28b498">
                 </div>
                 <div class="md-form mb-5">
                     <i class="fas fa-envelope prefix grey-text"></i>
-                    <input type="password" id="passEdit" class="form-control validate" placeholder="Your password"
-                           style="color: #28b498">
+                    <input type="text" id="editNameWallet" class="form-control validate" placeholder="Name Wallet" style="color: #28b498">
                 </div>
-                <div id="oldFile"></div>
-                <div class="md-form mb-5">
-                    <i class="fas fa-envelope prefix grey-text"></i>
-                    <progress value="0" max="100" id="uploader">0%</progress>
-                    <input type="file" value="upload" accept=".jpg;.png"
-                           onchange="upload(event)" name="image" id="fileButton">
-                </div>
-                <div id="imgDiv"></div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button class="btn btn-default" onclick="change_pass()">Edit</button>
-                </div>
+
+                <select class="md-form mb-5" id="editMoneyType">
+
+                </select>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default" onclick="editWallet()">Edit</button>
             </div>
         </div>
     </div>
 </div>
-<!--success modal-->
+<!--success modal -->
 <div id="myModal" class="modal fade">
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
@@ -309,7 +304,7 @@
 
                             <ul class="list-inline two-part d-flex align-items-center mb-0">
                                 <li>
-                                    <div><img width="100px" height="70" src="/chart.png">
+                                    <div><img width="100px" height="70" src="/images.jpg">
                                     </div>
                                 </li>
                                 <li class="ms-auto"><span class="counter text-danger">${data[i].moneyAmount.toLocaleString()}</span></li>
