@@ -1,7 +1,6 @@
 package com.example.financial_case_module_4.controller;
 
 import com.example.financial_case_module_4.model.MoneyType;
-import com.example.financial_case_module_4.model.User;
 import com.example.financial_case_module_4.model.Wallet;
 import com.example.financial_case_module_4.security.jwt.JwtAuthenticationFilter;
 import com.example.financial_case_module_4.service.login.UserService;
