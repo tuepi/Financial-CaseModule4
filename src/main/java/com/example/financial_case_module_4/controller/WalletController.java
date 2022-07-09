@@ -31,7 +31,7 @@ public class WalletController {
     IMoneyTypeService moneyTypeService;
 
     @GetMapping("/users/findByUser/{id}")
-    public ResponseEntity<Iterable<Wallet>> findAllByAppUserId(@PathVariable Long id) {
+    public ResponseEntity<Iterable<Wallet>> findAllByUserId(@PathVariable Long id) {
         Iterable<Wallet> wallets = walletService.findAllByUserId(id);
         return new ResponseEntity<>(wallets, HttpStatus.OK);
     }
@@ -85,12 +85,6 @@ public class WalletController {
         }
         return new ResponseEntity<>(wallets, HttpStatus.OK);
     }
-    @GetMapping("/findAllByUser")
-    public ResponseEntity<Iterable<Wallet>>findAllByUserContaining(@RequestParam User user){
-        List<Wallet> wallets = (List<Wallet>) walletService.findAllByUserContaining(user);
-        if (wallets.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(wallets, HttpStatus.OK);
-    }
+
+
 }

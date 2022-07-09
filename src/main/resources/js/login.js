@@ -92,7 +92,7 @@ function change_pass() {
         headers:{
             Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY")
         },
-        url: 'http://localhost:8081/users/change-password',
+        url: 'http://localhost:8000/users/change-password',
         method: 'PUT',
         data: changePassword,
         contentType: 'application/json; charset=utf8',
