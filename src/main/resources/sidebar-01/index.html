@@ -270,7 +270,6 @@
         </div>
     </div>
 </div>
-
 <!--edit modal-->
 <div class="modal fade" id="modalEditForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -309,6 +308,26 @@
         </div>
     </div>
 </div>
+<!--delete modal-->
+<div class="modal fade" id="modalDeleteForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 20px">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" onclick="resetValue()">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-default" id="accept" onclick="acceptModal()">Accept</button>
+                    <button class="btn btn-default" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--success modal-->
 <div id="myModal" class="modal fade">
     <div class="modal-dialog modal-confirm">
@@ -322,11 +341,11 @@
             <div class="modal-body text-center">
                 <h4>Successful!</h4>
                 <p id="notification"></p>
-                <!--                <button class="btn btn-success" data-dismiss="modal"><span>Start Exploring</span> <i class="material-icons">&#xE5C8;</i></button>-->
             </div>
         </div>
     </div>
 </div>
+
 <script src="js/popper.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
