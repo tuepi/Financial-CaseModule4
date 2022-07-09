@@ -313,17 +313,20 @@
     })
     function findAllTransactionByWallet(id) {
 
+    }
+    function addWallet() {
+       let moneyAmount = document.getElementById("moneyAmount").value;
+       let nameWallet = document.getElementById("nameWallet").value;
+       let selectMoneyType = document.getElementById("selectMoneyType").value;
         $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/wallets/transaction-by-wallet/" + id,
+            type: "POST",
+            url: "http://localhost:8000/wallets" ,
             success: function (data) {
-                localStorage.setItem("data", JSON.stringify(data));
-                window.location.href = "../transaction/transaction.html"
+
             }, error: function (error) {
                 console.log(error);
             }
         })
-
     }
 </script>
 
