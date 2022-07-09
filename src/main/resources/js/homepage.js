@@ -178,7 +178,7 @@ function findAllTransactionByWallet(id) {
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:8081/wallets/transaction-by-wallet/" + id,
+        url: "http://localhost:8000/wallets/transaction-by-wallet/" + id,
         success: function (data) {
             localStorage.setItem("data", JSON.stringify(data));
             window.location.href = "../transaction/transaction.html"
@@ -187,4 +187,114 @@ function findAllTransactionByWallet(id) {
         }
     })
 
+}
+function showAddForm(){
+    $('#modalCreateForm').modal('show');
+}
+function addWallet() {
+
+    let IdUser = window.sessionStorage.getItem("ID_USER_KEY");
+    let token = window.sessionStorage.getItem("TOKEN_KEY");
+    console.log("a==", token)
+    console.log("id=", IdUser)
+    let name = $("#name").val();
+    let icon = $("#icon").val();
+    let moneyAmount = $("#moneyAmount").val();
+    let moneyType = $("#moneyType").val();
+    let user = IdUser;
+    let obj = {
+        name: name,
+        icon: icon,
+        moneyType: {
+            id: moneyType
+        },
+        moneyAmount: moneyAmount,
+        user: {
+            id: user
+        }
+    }
+    $.ajax({
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: "POST",
+        url: "http://localhost:8000/wallets",
+        data: JSON.stringify(obj),
+        success: function (data) {
+            console.log(data)
+            alert("Create successfully!")
+        },
+        error: function (error) {
+            console.log(error)
+        }
+
+    });
+
+}
+
+
+function showEditWallet(id) {
+    $("#editWallet").modal('show');
+    let token = window.sessionStorage.getItem("TOKEN_KEY");
+    $.ajax({
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: "GET",
+        url: "http://localhost:8000/wallets/"+id,
+        success: function (data) {
+            $("#editId").val(data.id);
+            $("#editName").val(data.name);
+            $("#editIcon").val(data.icon);
+            $("#editMoneyAmount").val(data.moneyAmount);
+            $("#editMoneyType").val(data.moneyType.id);
+        }, error: function (err) {
+            console.log("error: ", err);
+        }
+    })
+}
+function editWallet() {
+    $('#editWallet').modal('hide');
+    let IdUser = window.sessionStorage.getItem("IDUSER_KEY");
+    let token = window.sessionStorage.getItem("TOKEN_KEY");
+    let id = $("#editId").val();
+    let name = $("#editName").val();
+    let icon = $("#editIcon").val();
+    let moneyAmount = $("#editMoneyAmount").val();
+    let moneyType = $("#editMoneyType").val();
+    let appUser = IdUser;
+    let obj = {
+        name: name,
+        icon: icon,
+        moneyType: {
+            id: moneyType
+        },
+        moneyAmount: moneyAmount,
+        appUser: {
+            id: appUser
+        }
+    }
+    $.ajax({
+        headers: {
+            Authorization: 'Bearer ' + token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: "PUT",
+        url: "http://localhost:8000/wallets/" +id ,
+        data: JSON.stringify(obj),
+        success: function (data) {
+            console.log(data)
+            alert("Edit successfully!")
+            showListWallet();
+        },
+        error: function (error) {
+            console.log(error)
+        }
+
+    });
 }
