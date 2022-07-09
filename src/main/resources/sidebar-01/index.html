@@ -6,14 +6,14 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!--    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <!--    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -23,10 +23,12 @@
 </head>
 <body onload="showLogin()">
 </div>
-<div class="wrapper d-flex align-items-stretch" onclick="showLogin()" >
+<div class="wrapper d-flex align-items-stretch" onclick="showLogin()">
     <nav id="sidebar" style="background-color: #28b498">
         <div class="p-4 pt-5">
-            <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
+            <a href="#" class="img logo rounded-circle mb-5">
+                <div id="avatar" onclick="showEditUser()"></div>
+            </a>
             <ul class="list-unstyled components mb-5">
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
@@ -124,7 +126,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fa fa-gear"></i> Settings</a>
                     </li>
-                    <li class="nav-item dropdown"3 id="profile">
+                    <li class="nav-item dropdown" 3 id="profile">
 
                     </li>
                 </ul>
@@ -132,22 +134,22 @@
         </nav>
 
         <div class="container">
-            <div id="display" >
+            <div id="display">
 
-              <!--  <div  class="col-lg-4 col-md-12" style="background-color: #f3eded; height: 250px">
-                    <div class="white-box analytics-info" style="background-color: #ffe8a1">
-                        <h3 class="box-title" style="text-align: center">Total Visit</h3>
-                        <ul class="list-inline two-part d-flex align-items-center mb-0">
-                            <li>
-                                <div id="sparklinedash">
-                                    <canvas width="67" height="100" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;">
-                                </canvas>
-                                </div>
-                            </li>
-                            <li class="ms-auto"><span class="counter text-success">ryhdfj</span></li>
-                        </ul>
-                    </div>
-                </div>-->
+                <!--  <div  class="col-lg-4 col-md-12" style="background-color: #f3eded; height: 250px">
+                      <div class="white-box analytics-info" style="background-color: #ffe8a1">
+                          <h3 class="box-title" style="text-align: center">Total Visit</h3>
+                          <ul class="list-inline two-part d-flex align-items-center mb-0">
+                              <li>
+                                  <div id="sparklinedash">
+                                      <canvas width="67" height="100" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;">
+                                  </canvas>
+                                  </div>
+                              </li>
+                              <li class="ms-auto"><span class="counter text-success">ryhdfj</span></li>
+                          </ul>
+                      </div>
+                  </div>-->
             </div>
         </div>
     </div>
@@ -165,13 +167,14 @@
                 </button>
             </div>
             <div class="modal-body mx-3">
-                <div class="md-form mb-5" >
+                <div class="md-form mb-5">
                     <i class="fas fa-envelope prefix grey-text"></i>
-                    <input type="text" id="username" placeholder="username"  style="color: #28b498">
+                    <input type="text" id="username" placeholder="username" style="color: #28b498">
                 </div>
-                <div class="md-form mb-4" >
+                <div class="md-form mb-4">
                     <i class="fas fa-lock prefix grey-text"></i>
-                    <input type="password" id="password" class="form-control validate" placeholder="password" style="color: #28b498">
+                    <input type="password" id="password" class="form-control validate" placeholder="password"
+                           style="color: #28b498">
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
@@ -199,19 +202,60 @@
             <div class="modal-body mx-3">
                 <div class="md-form mb-5">
                     <i class="fas fa-user prefix grey-text"></i>
-                    <input type="text" id="user" class="form-control validate" placeholder="Your name" style="color: #28b498">
+                    <input type="text" id="user" class="form-control validate" placeholder="Your name"
+                           style="color: #28b498">
                 </div>
                 <div class="md-form mb-5">
                     <i class="fas fa-envelope prefix grey-text"></i>
-                    <input type="text" id="pass" class="form-control validate" placeholder="Your password" style="color: #28b498">
+                    <input type="text" id="pass" class="form-control validate" placeholder="Your password"
+                           style="color: #28b498">
                 </div>
                 <div class="md-form mb-4">
                     <i class="fas fa-lock prefix grey-text"></i>
-                    <input type="password" id="confirmPassword" class="form-control validate" placeholder="confirmPassword" style="color: #28b498">
+                    <input type="password" id="confirmPassword" class="form-control validate"
+                           placeholder="confirmPassword" style="color: #28b498">
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button class="btn btn-default" onclick="register()">Sing Up</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--edit modal-->
+<div class="modal fade" id="modalEditForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 20px">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Edit</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" onclick="resetValue()">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <input type="hidden" id="id" name="id">
+                <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <span id="usernameEdit" class="form-control validate"
+                          style="color: #28b498;margin-left: 3rem;width: 92%;"></span>
+                </div>
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="password" id="passEdit" class="form-control validate" placeholder="Your password"
+                           style="color: #28b498">
+                </div>
+                <div id="oldFile"></div>
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <progress value="0" max="100" id="uploader">0%</progress>
+                    <input type="file" value="upload" accept=".jpg;.png"
+                           onchange="upload(event)" name="image" id="fileButton">
+                </div>
+                <div id="imgDiv"></div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-default" onclick="change_pass()">Edit</button>
+                </div>
             </div>
         </div>
     </div>
@@ -238,20 +282,22 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
 <script src="../js/login.js"></script>
-<script >
-    $.ajax({
-        headers: {
-            Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        type: "GET",
-        url: "http://localhost:8000/wallets/users/findByUser/" + window.sessionStorage.getItem("ID_USER_KEY"),
-        success: function (data) {
-            console.log(data)
-            let content = ``;
-            for (let i = 0; i < data.length; i++) {
-                content += `<div  class="col-lg-4 col-md-12">
+<script>
+    showAll();
+
+    function showAll() {
+        $.ajax({
+            headers: {
+                Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "GET",
+            url: "http://localhost:8000/wallets/users/findByUser/" + window.sessionStorage.getItem("ID_USER_KEY"),
+            success: function (data) {
+                let content = ``;
+                for (let i = 0; i < data.length; i++) {
+                    content += `<div  class="col-lg-4 col-md-12">
                         <div class="white-box analytics-info">
                         <ul class="list-inline two-part d-flex align-items-center mb-0">
                                 <li>
@@ -271,13 +317,15 @@
                         </div>
                         </div>
                      `
-            }
+                }
                 console.log(content)
-            document.getElementById("display").innerHTML = content;
-        }, error: function (error) {
-            console.log(error);
-        }
-    })
+                document.getElementById("display").innerHTML = content;
+            }, error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+
     function findAllTransactionByWallet(id) {
 
         $.ajax({
@@ -290,6 +338,88 @@
                 console.log(error);
             }
         })
+
+    }
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBEcKX62BLSUXRnffXpI_2JnTO-NTNvS5A",
+        authDomain: "tungvt-e0b14.firebaseapp.com",
+        projectId: "tungvt-e0b14",
+        storageBucket: "tungvt-e0b14.appspot.com",
+        messagingSenderId: "611791924190",
+        appId: "1:611791924190:web:ad8819fd2a8e1969130b4f",
+        measurementId: "G-89VFWCK810"
+    };
+    firebase.initializeApp(firebaseConfig);
+    let image = '';
+    let key = "img";
+    // firebase bucket name
+    // REPLACE WITH THE ONE YOU CREATE
+    // ALSO CHECK STORAGE RULES IN FIREBASE CONSOLE
+    let fbBucketName = 'images';
+
+    // get elements
+    let uploader = document.getElementById('uploader');
+    function upload(e) {
+
+        // what happened
+        console.log('file upload event', e);
+
+        // get file
+        let file = e.target.files[0];
+
+        // create a storage ref
+        let storageRef = firebase.storage().ref(`${fbBucketName}/${file.name}`);
+
+        // upload file
+        let uploadTask = storageRef.put(file);
+
+        // The part below is largely copy-pasted from the 'Full Example' section from
+        // https://firebase.google.com/docs/storage/web/upload-files
+
+        // update progress bar
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+            function (snapshot) {
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                uploader.value = progress;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case firebase.storage.TaskState.PAUSED: // or 'paused'
+                        console.log('Upload is paused');
+                        break;
+                    case firebase.storage.TaskState.RUNNING: // or 'running'
+                        console.log('Upload is running');
+                        break;
+                }
+            }, function (error) {
+
+                // A full list of error codes is available at
+                // https://firebase.google.com/docs/storage/web/handle-errors</html>
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                        // User doesn't have permission to access the object
+                        break;
+
+                    case 'storage/canceled':
+                        // User canceled the upload
+                        break;
+
+                    case 'storage/unknown':
+                        // Unknown error occurred, inspect error.serverResponse
+                        break;
+                }
+            }, function () {
+                // Upload completed successfully, now we can get the download URL
+                // save this link somewhere, e.g. put it in an input field
+                let downloadURL = uploadTask.snapshot.downloadURL;
+                localStorage.setItem(key, downloadURL);
+                // image = downloadURL;
+                console.log('downloadURL ===>', image);
+                let divLocation = document.getElementById("imgDiv");
+                divLocation.innerHTML = `<img src="${downloadURL}" style="width: 100px;height: 100px">`
+                console.log('pic ==', image)
+            });
 
     }
 </script>

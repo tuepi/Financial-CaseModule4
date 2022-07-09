@@ -16,24 +16,29 @@ function login() {
         data: JSON.stringify(logInForm),
         contentType: 'application/json; charset=utf8',
         success: function (data) {
-            console.log("vao day")
+            console.log(data)
             window.sessionStorage.removeItem('TOKEN_KEY');
             window.sessionStorage.setItem('TOKEN_KEY', data.accessToken);
             window.sessionStorage.removeItem('NAME_KEY');
             window.sessionStorage.setItem('NAME_KEY', data.username);
             window.sessionStorage.removeItem('AVATAR_KEY');
+            window.sessionStorage.setItem('AVATAR_KEY', data.avatar);
+            window.sessionStorage.removeItem('ID_USER_KEY');
             window.sessionStorage.setItem('ID_USER_KEY', data.id);
             let notification = "Successful login."
             document.getElementById("notification").innerHTML = notification
+            console.log(window.sessionStorage.getItem("AVATAR_KEY"))
             $('#modalLoginForm').modal('hide');
             $("#myModal").modal('show');
             setTimeout(function () {
                 $("#myModal").modal('hide');
             }, 1000);
             profile()
+            showAll();
         }
     })
 }
+
 function register() {
     let noUser={
         message:"no"
@@ -70,45 +75,66 @@ function register() {
         }
     })
 }
+
 function logout() {
     window.sessionStorage.clear();
     window.sessionStorage.removeItem("TOKEN_KEY")
+    document.getElementById("display").innerHTML = "";
     profile()
     $("#modalLoginForm").modal('show');
 }
-function change_pass() {
-    let no={
-        message:"no"
-    }
-    let yes={
-        message:"yes"
-    }
-    let changePasswordForm={};
-    changePasswordForm.currentPassword=$('#currentPassword').val();
-    changePasswordForm.newPassword=$('#newPassword').val();
-    let changePassword=JSON.stringify(changePasswordForm);
-    console.log("changPASSform=",changePasswordForm)
+
+function showEditUser() {
+    $("#modalEditForm").modal('show');
     $.ajax({
-        headers:{
+        headers: {
             Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY")
         },
-        url: 'http://localhost:8081/users/change-password',
-        method: 'PUT',
-        data: changePassword,
-        contentType: 'application/json; charset=utf8',
-        success: function (data) {
-            console.log('data ===', data);
-            if (JSON.stringify(data) == JSON.stringify(no)) {
-                console.log("failed")
-                document.getElementById('status').innerHTML = 'Old password is not correct! Please try again!'
-            }
-            if (JSON.stringify(data) == JSON.stringify(yes)) {console.log("success")
-                document.getElementById('status').innerHTML = "Change password successfully!"
-            }
+        type: "GET",
+        url: "http://localhost:8000/users/" + window.sessionStorage.getItem("ID_USER_KEY"),
+        success: function (account) {
+            document.getElementById('usernameEdit').innerHTML = ` ${account.username} `
+            document.getElementById('id').value = account.id
+            document.getElementById("oldFile").innerHTML = `<img  src="${account.avatar}" style="max-width: 50px;
+                                                                           height: 50px;margin-left: 3rem;width: 92%;">`;
         }
     })
 }
 
+function change_pass() {
+    let avatar = localStorage.getItem(key);
+    let changePasswordForm={};
+    changePasswordForm.password=$('#passEdit').val();
+    changePasswordForm.id = $('#id').val();
+    changePasswordForm.avatar = avatar;
+    let changePassword=JSON.stringify(changePasswordForm);
+    console.log(changePasswordForm)
+    $.ajax({
+        headers:{
+            Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY")
+        },
+        url: 'http://localhost:8000/users/'+ window.sessionStorage.getItem("ID_USER_KEY"),
+        method: 'PUT',
+        data: changePassword,
+        contentType: 'application/json; charset=utf8',
+        success: function (data) {
+            console.log(data.avatar)
+            document.getElementById("passEdit").value = "";
+            $("#modalEditForm").modal('hide');
+            $("#myModal").modal('show');
+            setTimeout(function () {
+                $("#myModal").modal('hide');
+            }, 1000);
+            window.sessionStorage.setItem('AVATAR_KEY', data.avatar);
+            changePassword = "";
+            profile()
+        }
+    })
+}
+
+function resetValue() {
+    document.getElementById("passEdit").value = "";
+}
 
 function profile() {
     if (window.sessionStorage.getItem("TOKEN_KEY") != null) {
@@ -117,11 +143,13 @@ function profile() {
                         <div class="dropdown-menu dropdown-menu-right dropdown-cyan"
                              aria-labelledby="navbarDropdownMenuLink-4" id="">
                             <a class="dropdown-item" data-target="#modalLoginForm" onclick="logout()">Logout</a>
-                            <a class="dropdown-item" data-target="#modalRegisterForm" onclick="change_pass()">ChangePassword</a>
+                            <a class="dropdown-item" data-target="#modalRegisterForm" onclick="showEditUser()">ChangePassword</a>
                         </div>`;
     } else {
         document.getElementById("profile").innerHTML = ""
     }
+    document.getElementById("avatar").innerHTML = `<img src="${window.sessionStorage.getItem("AVATAR_KEY")}" style="height: 100px;width: 100px;border-radius: 50%">`
+    localStorage.removeItem(key);
 }
 
 
