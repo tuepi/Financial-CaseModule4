@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/moneyCategorys")
+@RequestMapping("/moneyCategory")
 
 public class MoneyCategoryController {
-
 
 }

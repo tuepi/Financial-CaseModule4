@@ -94,6 +94,7 @@ function showEditUser() {
         type: "GET",
         url: "http://localhost:8000/users/" + window.sessionStorage.getItem("ID_USER_KEY"),
         success: function (account) {
+            console.log(account.username)
             document.getElementById('usernameEdit').innerHTML = ` ${account.username} `
             document.getElementById('id').value = account.id
             document.getElementById("oldFile").innerHTML = `<img  src="${account.avatar}" style="max-width: 50px;
