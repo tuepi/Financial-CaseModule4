@@ -22,7 +22,7 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String confirmPassword;
 
-    private String avatar = "https://png.pngtree.com/png-vector/20220610/ourmid/pngtree-hacker-or-anonymous-mask-icon-in-cartoon-style-isolated-on-background-png-image_4959250.png";
+    private String avatar;
     private boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
