@@ -93,4 +93,9 @@ public class WalletController {
         }
         return new ResponseEntity<>(wallets, HttpStatus.OK);
     }
+    @GetMapping("/users/showMoneyType")
+    public ResponseEntity<Iterable<MoneyType>> showMoneyType() {
+        Iterable<MoneyType> moneyTypes = moneyTypeService.findAll();
+        return new ResponseEntity<>(moneyTypes, HttpStatus.OK);
+    }
 }
