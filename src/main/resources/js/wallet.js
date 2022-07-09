@@ -90,8 +90,28 @@ function editWallet() {
     })
 }
 
-function deleteWallet() {
-    
+let deleteId = 0;
+
+function deleteWallet(id) {
+    $('#modalDeleteForm').modal('show')
+    deleteId = id;
+}
+
+function acceptModal() {
+        $.ajax({
+            type: "DELETE",
+            url: "http://localhost:8000/wallets/" + deleteId,
+            success: function (data) {
+                console.log(data)
+                $('#modalDeleteForm').modal('hide')
+                $("#myModal").modal('show');
+                setTimeout(function () {
+                    $("#myModal").modal('hide');
+                }, 1000);
+                showAllWallet();
+                deleteId = 0;
+            }
+        })
 }
 
 function showMoneyTypeAll(data) {

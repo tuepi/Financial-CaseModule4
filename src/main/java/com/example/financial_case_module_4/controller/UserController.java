@@ -113,18 +113,6 @@ public class UserController {
 
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUserProfile(@PathVariable Long id, @RequestBody User user) {
-//        Optional<User> userOptional = this.userService.findById(id);
-//        if (!userOptional.isPresent()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        if (userOptional.get().)
-//        user.setId(userOptional.get().getId());
-//        user.setUsername(userOptional.get().getUsername());
-//        user.setEnabled(userOptional.get().isEnabled());
-//        user.setRoles(userOptional.get().getRoles());
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        user.setConfirmPassword(user.getPassword());
-//        userService.save(user);
         user.setId(id);
         user.setRoles(userService.findById(id).get().getRoles());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
