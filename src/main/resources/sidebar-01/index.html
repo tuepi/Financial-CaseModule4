@@ -103,7 +103,7 @@
                         <a class="nav-link" href="#">Technology <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" onclick="showAddForm()">Add</a>
+                        <a class="nav-link" onclick="showAddWallet()">Add</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Laptops</a>
@@ -121,7 +121,7 @@
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#" onclick="showAddWallet()"><i class="fa fa-envelope"></i> hdfh <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#"><i class="fa fa-envelope"></i> Contact <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fa fa-gear"></i> Settings</a>
@@ -134,30 +134,7 @@
         </nav>
 
         <div class="container">
-<<<<<<<<< Temporary merge branch 1
-            <div id="display" >
-<<<<<<<<< Temporary merge branch 1
-
-=========
->>>>>>>>> Temporary merge branch 2
-=========
             <div id="display">
-
-                <!--  <div  class="col-lg-4 col-md-12" style="background-color: #f3eded; height: 250px">
-                      <div class="white-box analytics-info" style="background-color: #ffe8a1">
-                          <h3 class="box-title" style="text-align: center">Total Visit</h3>
-                          <ul class="list-inline two-part d-flex align-items-center mb-0">
-                              <li>
-                                  <div id="sparklinedash">
-                                      <canvas width="67" height="100" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;">
-                                  </canvas>
-                                  </div>
-                              </li>
-                              <li class="ms-auto"><span class="counter text-success">ryhdfj</span></li>
-                          </ul>
-                      </div>
-                  </div>-->
->>>>>>>>> Temporary merge branch 2
             </div>
         </div>
     </div>
@@ -230,29 +207,18 @@
         </div>
     </div>
 </div>
-<<<<<<<<< Temporary merge branch 1
-<<<<<<<<< Temporary merge branch 1
-<!--register modal-->
+<!--addWallet modal-->
 <div class="modal fade" id="modalAddWalletForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-=========
-<!--create modal-->
-<div class="modal fade" id="modalCreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
->>>>>>>>> Temporary merge branch 2
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="border-radius: 20px">
             <div class="modal-header text-center">
-<<<<<<<<< Temporary merge branch 1
                 <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Create Wallet</h4>
-=========
-                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Sign in</h4>
->>>>>>>>> Temporary merge branch 2
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body mx-3">
-<<<<<<<<< Temporary merge branch 1
                 <div class="md-form mb-5">
                     <i class="fas fa-user prefix grey-text"></i>
                     <input type="text" id="moneyAmount" class="form-control validate" placeholder="Money Amount" style="color: #28b498">
@@ -269,78 +235,48 @@
             <div class="modal-footer d-flex justify-content-center">
                 <button class="btn btn-default" onclick="addWallet()">Create</button>
             </div>
-=========
-                <form>
-                <div class="mb-3">
-                    <label class="col-form-label">Name:</label>
-                    <input type="text" class="form-control" id="name"
-                           placeholder="Wallet's name">
-                </div>
-                    <div class="mb-3">
-                        <label class="col-form-label">Money's type:</label>
-                        <select class="form-select category-type"
-                                aria-label="Default select example" id="moneyType">
-                            <option selected>Choose Money Type...</option>
-                        </select>
-                    </div>
-                <div class="mb-3">
-                    <label class="col-form-label">Money amount:</label>
-                    <input type="number" class="form-control" id="moneyAmount"
-                           placeholder="Money amount">
-                </div>
-
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-default" onclick="addWallet()">Add</button>
-            </div>
-
         </div>
     </div>
 </div>
-
-=========
-<!--edit modal-->
->>>>>>>>> Temporary merge branch 2
-<div class="modal fade" id="modalEditForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<!--editWallet modal-->
+<div class="modal fade" id="modalEditWalletForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="border-radius: 20px">
             <div class="modal-header text-center">
-<<<<<<<<< Temporary merge branch 1
-                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Sign in</h4>
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Create Wallet</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body mx-3">
-                <form>
-                    <div class="mb-3">
-                        <label class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="editName"
-                               placeholder="Wallet's name">
-                    </div>
-                    <div class="mb-3">
-                        <label class="col-form-label">Money's type:</label>
-                        <select class="form-select category-type"
-                                aria-label="Default select example" id="editMoneyType">
-                            <option selected>Choose Money Type...</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="col-form-label">Money amount:</label>
-                        <input type="number" class="form-control" id="editMoneyAmount"
-                               placeholder="Money amount">
-                    </div>
+                <input type="hidden" id="idEdit">
+                <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input type="text" id="moneyAmountEdit" class="form-control validate" placeholder="Money Amount" style="color: #28b498">
+                </div>
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="text" id="nameWalletEdit" class="form-control validate" placeholder="Name Wallet" style="color: #28b498">
+                </div>
 
-                </form>
+                <select class="md-form mb-5" id="selectMoneyTypeEdit">
+
+                </select>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-default" onclick="editWallet()">edit</button>
+                <button class="btn btn-default" onclick="editWallet()">Edit</button>
             </div>
+        </div>
+    </div>
+</div>
 
->>>>>>>>> Temporary merge branch 2
-=========
+<!--edit modal-->
+<div class="modal fade" id="modalEditForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 20px">
+            <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Edit</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" onclick="resetValue()">&times;</span>
@@ -370,7 +306,6 @@
                     <button class="btn btn-default" onclick="change_pass()">Edit</button>
                 </div>
             </div>
->>>>>>>>> Temporary merge branch 2
         </div>
     </div>
 </div>
@@ -395,110 +330,10 @@
 <script src="js/popper.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
-<script src="js/main.js"></script>
+<script src="../js/wallet.js"></script>
 <script src="../js/login.js"></script>
-<<<<<<<<< Temporary merge branch 1
-<script src="../js/homepage.js"></script>
-<script >
-    function showAddWallet() {
-        let showModal = document.getElementById("selectMoneyType")
-        $('#modalAddWalletForm').modal('show')
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8000/wallets/users/showMoneyType",
-            success: function (moneyType) {
-                console.log(moneyType)
-                let str = ""
-                for (let i = 0; i < moneyType.length; i++) {
-                    str += ` <option class="form-control validate"  style="color: #28b498" id="${moneyType[i].id}">${moneyType[i].name}</option>`
-                }
-                showModal.innerHTML = str;
-            }, error: function (error) {
-                console.log(error);
-            }
-        })
-    }
-    
-    $.ajax({
-        headers: {
-            Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        type: "GET",
-        url: "http://localhost:8000/wallets/users/findByUser/" + window.sessionStorage.getItem("ID_USER_KEY"),
-        success: function (data) {
-            let content = ``;
-            for (let i = 0; i < data.length; i++) {
-                content += `<div  class="col-lg-4 col-md-12" style="padding-top: 50px">
-=========
 <script>
-    showAll();
-
-    function showAll() {
-        $.ajax({
-            headers: {
-                Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            type: "GET",
-            url: "http://localhost:8000/wallets/users/findByUser/" + window.sessionStorage.getItem("ID_USER_KEY"),
-            success: function (data) {
-                let content = ``;
-                for (let i = 0; i < data.length; i++) {
-                    content += `<div  class="col-lg-4 col-md-12">
->>>>>>>>> Temporary merge branch 2
-                        <div class="white-box analytics-info">
-                        <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                <li>
-                                   <h1 class="box-title"><a style="text-align: center" href="#" onclick="findAllTransactionByWallet(${data[i].id})">${data[i].name}</a></h1>
-
-                                </li>
-                            </ul>
-                            <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                <li>
-                                    <div><img width="100px" height="70" src="/images.jpg">
-                                    </div>
-                                </li>
-                                <li class="ms-auto"><span class="counter "  style="color: #1c7430; font-size: 25px">${data[i].moneyAmount.toLocaleString()} ${data[i].moneyType.name}</span></li>
-                            </ul>
-                        </div>
-                        </div>
-                     `
-<<<<<<<<< Temporary merge branch 1
-            }
-            document.getElementById("display").innerHTML = content;
-        }, error: function (error) {
-            console.log(error);
-        }
-    })
-=========
-                }
-                console.log(content)
-                document.getElementById("display").innerHTML = content;
-            }, error: function (error) {
-                console.log(error);
-            }
-        })
-    }
-
->>>>>>>>> Temporary merge branch 2
-    function findAllTransactionByWallet(id) {
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8000/wallets/transaction-by-wallet/" + id,
-            success: function (data) {
-                localStorage.setItem("data", JSON.stringify(data));
-                window.location.href = "../transaction/transaction.html"
-            }, error: function (error) {
-                console.log(error);
-            }
-        })
-
-    }
-
+    showAllWallet();
     const firebaseConfig = {
         apiKey: "AIzaSyBEcKX62BLSUXRnffXpI_2JnTO-NTNvS5A",
         authDomain: "tungvt-e0b14.firebaseapp.com",
