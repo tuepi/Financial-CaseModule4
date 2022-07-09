@@ -2,7 +2,6 @@ package com.example.financial_case_module_4.controller;
 
 import com.example.financial_case_module_4.model.MoneyDetail;
 import com.example.financial_case_module_4.model.Transaction;
-import com.example.financial_case_module_4.model.User;
 import com.example.financial_case_module_4.model.Wallet;
 import com.example.financial_case_module_4.service.moneyDetail.IMoneyDetailService;
 import com.example.financial_case_module_4.service.transaction.ITransactionService;
@@ -48,7 +47,7 @@ public class TransactionController {
     public ResponseEntity<Transaction> saveTransaction(@RequestBody Transaction transaction) {
         Wallet wallet=walletService.findById(transaction.getWallet().getId()).get();
         MoneyDetail moneyDetail=moneyDetailService.findById(transaction.getMoneyDetail().getId()).get();
-        Integer a = transactionService.getMoneyCategoryByTransactionId(transaction.getId());
+        Long a = transactionService.getMoneyCategoryByMoneyDetailId(transaction.getMoneyDetail().getId());
         if(a==1) {
             wallet.setMoneyAmount(wallet.getMoneyAmount() - transaction.getMoneyAmount());
         }else {
