@@ -103,7 +103,7 @@
                         <a class="nav-link" href="#">Technology <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" onclick="showAddForm()">Add</a>
+                        <a class="nav-link" onclick="showAddWallet()">Add</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Laptops</a>
@@ -207,46 +207,70 @@
         </div>
     </div>
 </div>
-<!--create modal-->
-<div class="modal fade" id="modalCreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<!--addWallet modal-->
+<div class="modal fade" id="modalAddWalletForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="border-radius: 20px">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Sign in</h4>
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Create Wallet</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body mx-3">
-                <form>
-                <div class="mb-3">
-                    <label class="col-form-label">Name:</label>
-                    <input type="text" class="form-control" id="name"
-                           placeholder="Wallet's name">
+                <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input type="text" id="moneyAmount" class="form-control validate" placeholder="Money Amount" style="color: #28b498">
                 </div>
-                    <div class="mb-3">
-                        <label class="col-form-label">Money's type:</label>
-                        <select class="form-select category-type"
-                                aria-label="Default select example" id="moneyType">
-                            <option selected>Choose Money Type...</option>
-                        </select>
-                    </div>
-                <div class="mb-3">
-                    <label class="col-form-label">Money amount:</label>
-                    <input type="number" class="form-control" id="moneyAmount"
-                           placeholder="Money amount">
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="text" id="nameWallet" class="form-control validate" placeholder="Name Wallet" style="color: #28b498">
                 </div>
 
-                </form>
+                <select class="md-form mb-5" id="selectMoneyType">
+
+                </select>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-default" onclick="addWallet()">Add</button>
+                <button class="btn btn-default" onclick="addWallet()">Create</button>
             </div>
-
         </div>
     </div>
 </div>
+<!--editWallet modal-->
+<div class="modal fade" id="modalEditWalletForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 20px">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Create Wallet</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <input type="hidden" id="idEdit">
+                <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input type="text" id="moneyAmountEdit" class="form-control validate" placeholder="Money Amount" style="color: #28b498">
+                </div>
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="text" id="nameWalletEdit" class="form-control validate" placeholder="Name Wallet" style="color: #28b498">
+                </div>
+
+                <select class="md-form mb-5" id="selectMoneyTypeEdit">
+
+                </select>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default" onclick="editWallet()">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--edit modal-->
 <div class="modal fade" id="modalEditForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -306,50 +330,51 @@
 <script src="js/popper.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>
+<script src="../js/wallet.js"></script>
 <script src="../js/login.js"></script>
 <script>
-    showAll();
+    showAllWallet();
 
-    function showAll() {
-        $.ajax({
-            headers: {
-                Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            type: "GET",
-            url: "http://localhost:8000/wallets/users/findByUser/" + window.sessionStorage.getItem("ID_USER_KEY"),
-            success: function (data) {
-                let content = ``;
-                for (let i = 0; i < data.length; i++) {
-                    content += `<div  class="col-lg-4 col-md-12">
-                        <div class="white-box analytics-info">
-                        <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                <li>
-                                   <h1 class="box-title"><a style="text-align: center" href="#" onclick="findAllTransactionByWallet(${data[i].id})">${data[i].name}</a></h1>
-
-                                </li>
-                                <li class="ms-auto"><span style="font-size: large" class="counter text-success"></span></li>
-                            </ul>
-
-                            <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                <li>
-                                    <div><img width="100px" height="70" src="/chart.png">
-                                    </div>
-                                </li>
-                                <li class="ms-auto"><span class="counter text-danger">${data[i].moneyAmount.toLocaleString()}</span></li>
-                            </ul>
-                        </div>
-                        </div>
-                     `
-                }
-                console.log(content)
-                document.getElementById("display").innerHTML = content;
-            }, error: function (error) {
-                console.log(error);
-            }
-        })
-    }
+    // function showAllWallet() {
+    //     $.ajax({
+    //         headers: {
+    //             Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         type: "GET",
+    //         url: "http://localhost:8000/wallets/users/findByUser/" + window.sessionStorage.getItem("ID_USER_KEY"),
+    //         success: function (data) {
+    //             let content = ``;
+    //             for (let i = 0; i < data.length; i++) {
+    //                 content += `<div  class="col-lg-4 col-md-12">
+    //                     <div class="white-box analytics-info">
+    //                     <ul class="list-inline two-part d-flex align-items-center mb-0">
+    //                             <li>
+    //                                <h1 class="box-title"><a style="text-align: center" href="#" onclick="findAllTransactionByWallet(${data[i].id})">${data[i].name}</a></h1>
+    //
+    //                             </li>
+    //                             <li class="ms-auto"><span style="font-size: large" class="counter text-success"></span></li>
+    //                         </ul>
+    //
+    //                         <ul class="list-inline two-part d-flex align-items-center mb-0">
+    //                             <li>
+    //                                 <div><img width="100px" height="70" src="/chart.png">
+    //                                 </div>
+    //                             </li>
+    //                             <li class="ms-auto"><span class="counter text-danger">${data[i].moneyAmount.toLocaleString()} ${data[i]}.m</span></li>
+    //                         </ul>
+    //                     </div>
+    //                     </div>
+    //                  `
+    //             }
+    //             console.log(content)
+    //             document.getElementById("display").innerHTML = content;
+    //         }, error: function (error) {
+    //             console.log(error);
+    //         }
+    //     })
+    // }
 
     function findAllTransactionByWallet(id) {
 

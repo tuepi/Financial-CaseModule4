@@ -53,11 +53,8 @@ public class WalletController {
     }
     @PostMapping
     public ResponseEntity<Wallet> saveWallet(@RequestBody Wallet wallet) {
-        MoneyType moneyType=moneyTypeService.findById(wallet.getMoneyType().getId()).get();
-        User user=userService.findById(wallet.getUser().getId()).get();
-        moneyTypeService.save(moneyType);
-        userService.save(user);
-        return new ResponseEntity<>(walletService.save(wallet), HttpStatus.CREATED);
+        walletService.save(wallet);
+        return new ResponseEntity<>(wallet, HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Wallet> updateWallet(@PathVariable Long id, @RequestBody Wallet wallet) {
@@ -85,14 +82,7 @@ public class WalletController {
         }
         return new ResponseEntity<>(wallets, HttpStatus.OK);
     }
-    @GetMapping("/findAllByUser")
-    public ResponseEntity<Iterable<Wallet>>findAllByUserContaining(@RequestParam User user){
-        List<Wallet> wallets = (List<Wallet>) walletService.findAllByUserContaining(user);
-        if (wallets.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(wallets, HttpStatus.OK);
-    }
+
     @GetMapping("/users/showMoneyType")
     public ResponseEntity<Iterable<MoneyType>> showMoneyType() {
         Iterable<MoneyType> moneyTypes = moneyTypeService.findAll();

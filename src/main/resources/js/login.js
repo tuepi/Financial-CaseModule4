@@ -34,7 +34,8 @@ function login() {
                 $("#myModal").modal('hide');
             }, 1000);
             profile()
-            showAll();
+            // showAllWallet();
+            showAllWallet();
         }
     })
 }
