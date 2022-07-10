@@ -40,8 +40,8 @@ public class TransactionService implements ITransactionService{
         return transactionRepository.findAllByWalletAndCreatedDateBetween(wallet_id,fromTime,toTime);
     }
 
-    public int getMoneyCategoryByTransactionId(Long transaction_id) {
-        return transactionRepository.getMoneyCategoryByTransactionId(transaction_id);
+    public Long getMoneyCategoryByMoneyDetailId(Long moneyCategoryId) {
+        return transactionRepository.getMoneyCategoryByMoneyDetailId(moneyCategoryId);
     }
 
 }

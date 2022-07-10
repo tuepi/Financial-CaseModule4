@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Repository
 
@@ -19,11 +18,9 @@ public interface ITransactionRepository extends JpaRepository<Transaction, Long>
 
 
 
-    @Query (value = "select money_category.id from" +
-            " money_category join money_detail md on" +
-            " money_category.id = md.money_category_id " +
-            "join transaction t on md.id = t.money_detail_id" +
-            " join wallet w on w.id = t.wallet_id where t.id =: id" , nativeQuery = true)
-    Integer getMoneyCategoryByTransactionId(@Param("id")Long money_category_id);
+//    @Query (value = "select money_category.id from money_category join money_detail md on money_category.id = md.money_category_id join transaction t on md.id = t.money_detail_id join wallet w on w.id = t.wallet_id where t.id =:id" , nativeQuery = true)
+//    Long getMoneyCategoryByTransactionId(@Param("id")Long money_category_id);
 
+    @Query (value = "select money_category.id from money_category join money_detail md on money_category.id = md.money_category_id where md.id =:id", nativeQuery = true)
+    Long getMoneyCategoryByMoneyDetailId(@Param("id")Long moneyCategoryId);
 }

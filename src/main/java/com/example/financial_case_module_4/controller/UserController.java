@@ -27,7 +27,7 @@ import java.util.Set;
 @RestController
 @PropertySource("classpath:application.properties")
 @CrossOrigin("*")
-public class UserController {
+public class    UserController {
     @Autowired
     private Environment env;
 
