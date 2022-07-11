@@ -25,8 +25,10 @@ function login() {
             window.sessionStorage.setItem('AVATAR_KEY', data.avatar);
             window.sessionStorage.removeItem('ID_USER_KEY');
             window.sessionStorage.setItem('ID_USER_KEY', data.id);
-            let notification = "Successful login."
+            let notification = "Successful"
+            let notificationCancel = "Fail"
             document.getElementById("notification").innerHTML = notification
+            document.getElementById("notificationCancel").innerHTML = notificationCancel
             console.log(window.sessionStorage.getItem("AVATAR_KEY"))
             $('#modalLoginForm').modal('hide');
             $("#myModal").modal('show');
@@ -135,6 +137,10 @@ function change_pass() {
 
 function resetValue() {
     document.getElementById("passEdit").value = "";
+    $("#myModalCancel").modal('show');
+    setTimeout(function () {
+        $("#myModalCancel").modal('hide');
+    }, 1000);
 }
 
 function profile() {

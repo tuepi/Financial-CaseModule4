@@ -18,6 +18,8 @@ public class Transaction {
     private Wallet wallet;
     @ManyToOne
     private MoneyDetail moneyDetail;
+    @ManyToOne
+    private MoneyCategory moneyCategory;
 
     public Transaction() {
     }
@@ -68,5 +70,13 @@ public class Transaction {
 
     public void setMoneyDetail(MoneyDetail moneyDetail) {
         this.moneyDetail = moneyDetail;
+    }
+
+    public MoneyCategory getMoneyCategory() {
+        return moneyCategory;
+    }
+
+    public void setMoneyCategory(MoneyCategory moneyCategory) {
+        this.moneyCategory = moneyCategory;
     }
 }

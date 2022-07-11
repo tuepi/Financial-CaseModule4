@@ -10,8 +10,7 @@ public class MoneyDetail {
     private Long id;
     @NotBlank(message = "ko đe trong dmm!!")
     private String name;
-    @ManyToOne
-    private MoneyCategory moneyCategory;
+
 
     public MoneyDetail() {
     }
@@ -32,11 +31,4 @@ public class MoneyDetail {
         this.name = name;
     }
 
-    public MoneyCategory getMoneyCategory() {
-        return moneyCategory;
-    }
-
-    public void setMoneyCategory(MoneyCategory moneyCategory) {
-        this.moneyCategory = moneyCategory;
-    }
 }

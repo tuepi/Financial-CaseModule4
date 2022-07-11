@@ -1,9 +1,7 @@
 package com.example.financial_case_module_4.controller;
 
-import com.example.financial_case_module_4.model.MoneyDetail;
-import com.example.financial_case_module_4.model.Transaction;
-import com.example.financial_case_module_4.model.User;
-import com.example.financial_case_module_4.model.Wallet;
+import com.example.financial_case_module_4.model.*;
+import com.example.financial_case_module_4.service.moneyCategory.IMoneyCategoryService;
 import com.example.financial_case_module_4.service.moneyDetail.IMoneyDetailService;
 import com.example.financial_case_module_4.service.transaction.ITransactionService;
 import com.example.financial_case_module_4.service.wallet.IWalletService;
@@ -27,8 +25,10 @@ public class TransactionController {
     IMoneyDetailService moneyDetailService;
     @Autowired
     IWalletService walletService;
+    @Autowired
+    IMoneyCategoryService categoryService;
     @GetMapping
-    public ResponseEntity<Iterable<Transaction>> findAllTransaction() {
+    public ResponseEntity<Iterable<Transaction>> findAllTransactionByWallet() {
         List<Transaction> transactions = (List<Transaction>) transactionService.findAll();
         if (transactions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -47,25 +47,33 @@ public class TransactionController {
     @PostMapping
     public ResponseEntity<Transaction> saveTransaction(@RequestBody Transaction transaction) {
         Wallet wallet=walletService.findById(transaction.getWallet().getId()).get();
-        MoneyDetail moneyDetail=moneyDetailService.findById(transaction.getMoneyDetail().getId()).get();
-        Integer a = transactionService.getMoneyCategoryByTransactionId(transaction.getId());
-        if(a==1) {
-            wallet.setMoneyAmount(wallet.getMoneyAmount() - transaction.getMoneyAmount());
-        }else {
+        MoneyDetail moneyDetail = moneyDetailService.findById(transaction.getMoneyDetail().getId()).get();
+        transaction.setCreatedDate(LocalDateTime.now());
+        if(moneyDetail.getId() == 1) {
             wallet.setMoneyAmount(wallet.getMoneyAmount() + transaction.getMoneyAmount());
+        }else {
+            wallet.setMoneyAmount(wallet.getMoneyAmount() - transaction.getMoneyAmount());
         }
         walletService.save(wallet);
-        moneyDetailService.save(moneyDetail);
-
         return new ResponseEntity<>(transactionService.save(transaction), HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody Transaction transaction) {
+    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody Transaction transaction,@RequestParam("old") Double money) {
         Optional<Transaction> transactionOptional = transactionService.findById(id);
         if (!transactionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         transaction.setId(transactionOptional.get().getId());
+        Wallet wallet=walletService.findById(transaction.getWallet().getId()).get();
+        MoneyDetail moneyDetail = moneyDetailService.findById(transaction.getMoneyDetail().getId()).get();
+        transaction.setCreatedDate(LocalDateTime.now());
+        if(moneyDetail.getId() == 1) {
+            wallet.setMoneyAmount(wallet.getMoneyAmount() - money);
+            wallet.setMoneyAmount(wallet.getMoneyAmount() + transaction.getMoneyAmount());
+        }else {
+            wallet.setMoneyAmount(wallet.getMoneyAmount() + money);
+            wallet.setMoneyAmount(wallet.getMoneyAmount() - transaction.getMoneyAmount());
+        }
         return new ResponseEntity<>(transactionService.save(transaction), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
@@ -77,14 +85,36 @@ public class TransactionController {
         transactionService.remove(id);
         return new ResponseEntity<>(transactionOptional.get(), HttpStatus.NO_CONTENT);
     }
-    @GetMapping("/findAllByWallet")
-    public ResponseEntity<Iterable<Transaction>>findAllByWallet(@RequestParam Wallet wallet){
+    @GetMapping("/findAllByWallet/{id}")
+    public ResponseEntity<Iterable<Transaction>>findAllByWallet(@PathVariable Long id){
+        Wallet wallet = walletService.findById(id).get();
         List<Transaction> transactions = (List<Transaction>) transactionService.findAllByWallet(wallet);
         if (transactions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
+    @GetMapping("/findAllMoneyDetail")
+        public ResponseEntity<Iterable<MoneyDetail>> findAllMoneyDetail(){
+        return new ResponseEntity<>(moneyDetailService.findAll(),HttpStatus.OK);
+    }
+    @GetMapping("/findAllMoneyDetail/{id}")
+    public ResponseEntity<Iterable<Transaction>> findAllMoneyDetailByName(@PathVariable Long id){
+        return new ResponseEntity<>(transactionService.findAllByMoneyCategory_Id(id),HttpStatus.OK);
+    }
+    @GetMapping("/findAllMoneyCategories")
+    public ResponseEntity<Iterable<MoneyCategory>> findAllMoneyCategory(){
+        return new ResponseEntity<>(categoryService.findAll(),HttpStatus.OK);
+    }
+    @GetMapping("/findAllByAmountMoney")
+    public ResponseEntity<Double> findAllByAmountMoney(){
+        return new ResponseEntity<>(transactionService.getAllByMoneyAmount(),HttpStatus.OK);
+    }
+    @GetMapping("/findAllByAmountMoney/{id}")
+        public ResponseEntity<Double> findAllByAmountMoneyDetail(@PathVariable Long id){
+        return new ResponseEntity<>(transactionService.getAllByMoneyAmount(id),HttpStatus.OK);
+    }
+
     @GetMapping("/findAllByCreatedDate")
     public ResponseEntity<Iterable<Transaction>>findAllByCreatedDateBetween(@RequestParam String fromTime,@RequestParam String toTime){
         if(fromTime.equals("") && toTime.equals("")){

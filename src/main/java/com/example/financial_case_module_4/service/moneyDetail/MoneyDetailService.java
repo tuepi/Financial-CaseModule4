@@ -25,4 +25,9 @@ public class MoneyDetailService implements IMoneyDetailService{
     public void remove(Long id) {
         moneyDetailRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<MoneyDetail> findAllById(Long id) {
+        return moneyDetailRepository.findAllById(id);
+    }
 }

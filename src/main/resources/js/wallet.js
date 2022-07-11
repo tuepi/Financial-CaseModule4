@@ -14,7 +14,7 @@ function showAllWallet() {
                         <div class="white-box analytics-info">
                         <ul class="list-inline two-part d-flex align-items-center mb-0">
                                 <li>
-                                   <h1 class="box-title"><a style="text-align: center" href="#" onclick="findAllTransactionByWallet(${data[i].id})">${data[i].name}</a></h1>
+                                   <h1 class="box-title"><a style="text-align: center" href="#" onclick="findAllTransactionByWalletId(${data[i].id})">${data[i].name}</a></h1>
 
                                 </li>
                             </ul>
@@ -172,6 +172,3 @@ function addWallet() {
     })
 }
 
-function findAllTransactionByWallet(id) {
-
-}
