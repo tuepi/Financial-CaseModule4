@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="../css/input.css">
     <link rel="stylesheet" href="../css/modal.css">
+    <link rel="stylesheet" href="../css/modal1.css">
+    <script src="../js/transaction.js"></script>
 </head>
 <body onload="showLogin()">
 </div>
@@ -31,7 +33,7 @@
             </a>
             <ul class="list-unstyled components mb-5">
                 <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">MoneyDetail</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
                             <a href="#">Home 1</a>
@@ -100,20 +102,20 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Technology <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" onclick="showAddWallet()">Add</a>
+                        <a class="nav-link" onclick="showAllWallet()">All wallet <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Laptops</a>
+                        <a class="nav-link" onclick="showAddWallet()">Add Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="showAddTransactionNoChoice()">Add Transaction</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-5" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">Category
+                           aria-haspopup="true" aria-expanded="false">More
                         </a>
                         <div class="dropdown-menu dropdown-purple" aria-labelledby="navbarDropdownMenuLink-5">
-                            <a class="dropdown-item" href="#">Technology</a>
+                            <a class="dropdown-item" onclick="findAllTransactionByWallet()">All Transaction</a>
                             <a class="dropdown-item" href="#">Fashion</a>
                             <a class="dropdown-item" href="#">Vegetable</a>
                         </div>
@@ -148,7 +150,7 @@
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Sign in</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true" onclick="resetValue()">&times;</span>
                 </button>
             </div>
             <div class="modal-body mx-3">
@@ -215,7 +217,7 @@
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Create Wallet</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true" onclick="resetValue()">&times;</span>
                 </button>
             </div>
             <div class="modal-body mx-3">
@@ -246,7 +248,7 @@
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Edit Wallet</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true" onclick="resetValue()">&times;</span>
                 </button>
             </div>
             <div class="modal-body mx-3">
@@ -314,7 +316,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="border-radius: 20px">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498"></h4>
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Do you want to delete?</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" onclick="resetValue()">&times;</span>
                 </button>
@@ -322,7 +324,7 @@
             <div class="modal-body mx-3">
                 <div class="modal-footer d-flex justify-content-center">
                     <button class="btn btn-default" id="accept" onclick="acceptModal()">Accept</button>
-                    <button class="btn btn-default" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+                    <button class="btn btn-default" class="close" data-dismiss="modal" aria-label="Close" onclick="resetValue()">Cancel</button>
                 </div>
             </div>
         </div>
@@ -345,7 +347,171 @@
         </div>
     </div>
 </div>
+<!--cancel modal-->
+<div id="myModalCancel" class="modal fade">
+    <div class="modal-dialog modal-cancel">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="alert-warning">&#xE876;</i>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <h4>Cancel!</h4>
+                <p id="notificationCancel"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--add transaction-->
+<div class="modal fade" id="modalAddTransactionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 20px">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Create Transaction</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" onclick="resetValue()">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input type="text" id="moneyAmountTransaction" class="form-control validate" placeholder="Money Amount" style="color: #28b498">
+                </div>
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="text" id="nameWalletTransaction" class="form-control validate" placeholder="Note" style="color: #28b498">
+                </div>
+                <div class="md-form mb-5">
+                    <i>Detail</i>
+                    <select id="selectMoneyDetail">
 
+                    </select>
+                </div>
+                <div class="md-form mb-5">
+                    <i>Type</i>
+                    <select id="selectMoneyCategory">
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default" onclick="addTransaction()">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--add transactionNoChoice-->
+<div class="modal fade" id="modalAddTransaction1Form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 20px">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Create Transaction</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" onclick="resetValue()">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input type="text" id="moneyAmountTransaction1" class="form-control validate" placeholder="Money Amount" style="color: #28b498">
+                </div>
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="text" id="noteWalletTransaction" class="form-control validate" placeholder="Note" style="color: #28b498">
+                </div>
+                <div class="md-form mb-5">
+                    <i>Wallet</i>
+                    <select id="selectWallet">
+
+                    </select>
+                </div>
+                <div class="md-form mb-5">
+                    <i>Detail</i>
+                    <select id="selectMoneyDetail1">
+
+                    </select>
+                </div>
+                <div class="md-form mb-5">
+                    <i>Type</i>
+                    <select id="selectMoneyCategory1">
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default" onclick="addTransactionNoChoice()">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--edit transaction-->
+<div class="modal fade" id="modalEditTransactionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 20px">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Edit Transaction</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" onclick="resetValue()">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <input type="hidden" id="transactionId">
+                <input type="hidden" id="oldAmountMoney" name="old">
+                <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input type="text" id="moneyAmountTransactionEdit" class="form-control validate" placeholder="Money Amount" style="color: #28b498">
+                </div>
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="text" id="noteWalletTransactionEdit" class="form-control validate" placeholder="Note" style="color: #28b498">
+                </div>
+                <div class="md-form mb-5">
+                    <i>Wallet</i>
+                    <select id="selectWalletEdit">
+
+                    </select>
+                </div>
+                <div class="md-form mb-5">
+                    <i>Detail</i>
+                    <select id="selectMoneyDetailEdit">
+
+                    </select>
+                </div>
+                <div class="md-form mb-5">
+                    <i>Type</i>
+                    <select id="selectMoneyCategoryEdit">
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default" onclick="editTransaction()">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--delete transaction-->
+<div class="modal fade" id="modalDeleteTransactionForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 20px">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Do you want to delete?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" onclick="resetValue()">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-default"  onclick="acceptModal1()">Accept</button>
+                    <button class="btn btn-default" class="close" data-dismiss="modal" aria-label="Close" onclick="resetValue()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="js/popper.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/main.js"></script>

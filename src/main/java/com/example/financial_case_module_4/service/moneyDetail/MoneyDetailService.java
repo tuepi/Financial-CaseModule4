@@ -1,6 +1,5 @@
 package com.example.financial_case_module_4.service.moneyDetail;
 
-import com.example.financial_case_module_4.model.MoneyCategory;
 import com.example.financial_case_module_4.model.MoneyDetail;
 import com.example.financial_case_module_4.repository.IMoneyDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,8 @@ public class MoneyDetailService implements IMoneyDetailService{
         moneyDetailRepository.deleteById(id);
     }
 
-    public Iterable<MoneyCategory> showMoneyCategory() {
-        return null;
+    @Override
+    public Iterable<MoneyDetail> findAllById(Long id) {
+        return moneyDetailRepository.findAllById(id);
     }
 }

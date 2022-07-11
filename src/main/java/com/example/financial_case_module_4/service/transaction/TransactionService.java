@@ -44,4 +44,19 @@ public class TransactionService implements ITransactionService{
         return transactionRepository.getMoneyCategoryByMoneyDetailId(moneyCategoryId);
     }
 
+    @Override
+    public Iterable<Transaction> findAllByMoneyCategory_Id(Long id) {
+        return transactionRepository.findAllByMoneyCategory_Id(id);
+    }
+
+    @Override
+    public Double getAllByMoneyAmount(Long money_detail_id) {
+        return transactionRepository.getAllByMoneyAmount(money_detail_id);
+    }
+
+    @Override
+    public Double getAllByMoneyAmount() {
+        return transactionRepository.getAllByMoneyAmount();
+    }
+
 }
