@@ -1,7 +1,7 @@
 let walletId = 0;
 let transaction_id = 0;
 let money_detail_id = 0;
-
+let old_money_amount = 0;
 function findAllTransactionByWallet() {
     $.ajax({
         headers: {
@@ -74,50 +74,6 @@ function findAllTransactionByWalletId(id) {
     })
 }
 
-function showAllMoneyDetail(data) {
-    $.ajax({
-        headers: {
-            Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        type: "GET",
-        url: "http://localhost:8000/transactions/findAllMoneyDetail",
-        success: function (moneyDetail) {
-            let content = "";
-            for (let i = 0; i < moneyDetail.length; i++) {
-                content += ` <option class="form-control validate"  style="color: #28b498" value="${moneyDetail[i].id}">${moneyDetail[i].name}</option>`
-            }
-            data.innerHTML = content;
-        }
-    })
-}
-
-function showAllMoneyDetailIndex() {
-    $.ajax({
-        headers: {
-            Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        type: "GET",
-        url: "http://localhost:8000/transactions/findAllMoneyDetail",
-        success: function (moneyDetail) {
-            console.log(moneyDetail)
-            let content = ``;
-            content += `<li><a onclick="findAllTransactionByWallet()">All</a></li>`;
-            for (let i = 0; i < moneyDetail.length; i++) {
-                content += `
-                            <li><a onclick="showAllMoneyDetailDisplay(${moneyDetail[i].id})">${moneyDetail[i].name}</a></li>`
-            }
-
-            document.getElementById("homeSubmenu").innerHTML = content;
-        }
-    })
-}
-
-showAllMoneyDetailIndex();
-
 function showAllMoneyDetailDisplay(id) {
     $.ajax({
         headers: {
@@ -130,6 +86,8 @@ function showAllMoneyDetailDisplay(id) {
         success: function (data) {
             dataMoneyDetail(data);
             money_detail_id = id;
+            old_money_amount = data.moneyAmount;
+            console.log(data.moneyAmount)
             totalAmountMoney();
         }
     })
@@ -156,7 +114,8 @@ function dataMoneyDetail(data) {
                     </table><div id="result"></div>`
     let content1 = "";
     if (data == null) {
-        document.getElementById("display").innerHTML = `<h3>No Transaction</h3> <button onclick="showAllWallet()">Back to wallet</button>`;
+        content += `<h3>No Transaction</h3>`;
+        document.getElementById("display").innerHTML = content;
     } else {
         for (let i = 0; i < data.length; i++) {
             content1 += `
@@ -396,7 +355,6 @@ function editTransaction() {
             id: wallet_id
         }
     }
-    console.log(transaction)
     $.ajax({
         headers: {
             Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
@@ -412,8 +370,7 @@ function editTransaction() {
             setTimeout(function () {
                 $("#myModal").modal('hide');
             }, 1000);
-            findAllTransactionByWalletId(walletId);
-            walletId = 0;
+            showAllWallet();
         }
     })
 }
@@ -421,12 +378,20 @@ function editTransaction() {
 function deleteTransaction(id) {
     $('#modalDeleteTransactionForm').modal('show')
     transaction_id = id;
+    $.ajax({
+        Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
+        type: "GET",
+        url: "http://localhost:8000/transactions/" + id,
+        success: function (data) {
+            old_money_amount = data.moneyAmount;
+        }
+    })
 }
 
 function acceptModal1() {
     $.ajax({
         type: "DELETE",
-        url: "http://localhost:8000/transactions/" + transaction_id,
+        url: "http://localhost:8000/transactions/" + transaction_id + "?old="+old_money_amount,
         success: function (data) {
             console.log(data)
             $('#modalDeleteTransactionForm').modal('hide')
@@ -436,6 +401,7 @@ function acceptModal1() {
             }, 1000);
             findAllTransactionByWallet()
             transaction_id = 0;
+            old_money_amount =0;
         }
     })
 }

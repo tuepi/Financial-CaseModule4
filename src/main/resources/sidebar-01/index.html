@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="../css/modal.css">
     <link rel="stylesheet" href="../css/modal1.css">
     <script src="../js/transaction.js"></script>
+    <script src="../js/money_detail.js"></script>
 </head>
 <body onload="showLogin()">
 </div>
@@ -65,7 +66,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Portfolio</a>
+                    <a oninput=""><input type="datetime-local" name="formTime"> <input type="datetime-local" name="toTime"> </a>
                 </li>
                 <li>
                     <a href="#">Contact</a>
@@ -116,7 +117,8 @@
                         </a>
                         <div class="dropdown-menu dropdown-purple" aria-labelledby="navbarDropdownMenuLink-5">
                             <a class="dropdown-item" onclick="findAllTransactionByWallet()">All Transaction</a>
-                            <a class="dropdown-item" href="#">Fashion</a>
+                            <a class="dropdown-item" onclick="showAddMoneyDetail()">Add MoneyDetail</a>
+                            <a class="dropdown-item" href="#">Vegetable</a>
                             <a class="dropdown-item" href="#">Vegetable</a>
                         </div>
                     </li>
@@ -504,10 +506,35 @@
                 </button>
             </div>
             <div class="modal-body mx-3">
+                <input type="hidden" name="old" id="oldMoneyAmount">
                 <div class="modal-footer d-flex justify-content-center">
                     <button class="btn btn-default"  onclick="acceptModal1()">Accept</button>
                     <button class="btn btn-default" class="close" data-dismiss="modal" aria-label="Close" onclick="resetValue()">Cancel</button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--add money_detail-->
+<div class="modal fade" id="modalAddMoneyDetailForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 20px">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Create MoneyDetail</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" onclick="resetValue()">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="text" id="nameMoneyDetail" class="form-control validate" placeholder="Name MoneyDetail" style="color: #28b498">
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default" onclick="addWallet()">Create</button>
             </div>
         </div>
     </div>

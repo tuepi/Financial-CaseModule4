@@ -65,6 +65,7 @@ public class TransactionController {
         }
         transaction.setId(transactionOptional.get().getId());
         Wallet wallet=walletService.findById(transaction.getWallet().getId()).get();
+        transaction.setWallet(wallet);
         MoneyDetail moneyDetail = moneyDetailService.findById(transaction.getMoneyDetail().getId()).get();
         transaction.setCreatedDate(LocalDateTime.now());
         if(moneyDetail.getId() == 1) {
@@ -77,11 +78,21 @@ public class TransactionController {
         return new ResponseEntity<>(transactionService.save(transaction), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Transaction> deleteTransaction(@PathVariable Long id) {
+    public ResponseEntity<Transaction> deleteTransaction(@PathVariable Long id,@RequestParam("old") Double money) {
         Optional<Transaction> transactionOptional = transactionService.findById(id);
         if (!transactionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        Transaction transaction = transactionService.findById(id).get();
+        Wallet wallet = walletService.findById(transaction.getWallet().getId()).get();
+        transaction.setWallet(wallet);
+        MoneyDetail moneyDetail = moneyDetailService.findById(transaction.getMoneyDetail().getId()).get();
+        if(moneyDetail.getId() == 1) {
+            wallet.setMoneyAmount(wallet.getMoneyAmount() - money);
+        }else {
+            wallet.setMoneyAmount(wallet.getMoneyAmount() + money);
+        }
+        walletService.save(wallet);
         transactionService.remove(id);
         return new ResponseEntity<>(transactionOptional.get(), HttpStatus.NO_CONTENT);
     }
@@ -94,10 +105,7 @@ public class TransactionController {
         }
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
-    @GetMapping("/findAllMoneyDetail")
-        public ResponseEntity<Iterable<MoneyDetail>> findAllMoneyDetail(){
-        return new ResponseEntity<>(moneyDetailService.findAll(),HttpStatus.OK);
-    }
+
     @GetMapping("/findAllMoneyDetail/{id}")
     public ResponseEntity<Iterable<Transaction>> findAllMoneyDetailByName(@PathVariable Long id){
         return new ResponseEntity<>(transactionService.findAllByMoneyCategory_Id(id),HttpStatus.OK);
@@ -116,12 +124,8 @@ public class TransactionController {
     }
 
     @GetMapping("/findAllByCreatedDate")
-    public ResponseEntity<Iterable<Transaction>>findAllByCreatedDateBetween(@RequestParam String fromTime,@RequestParam String toTime){
-        if(fromTime.equals("") && toTime.equals("")){
-            fromTime = "1900-01-01T00:00:00";
-            toTime = String.valueOf(LocalDateTime.now());
-        }
-        return new ResponseEntity<>(transactionService.findAllByCreatedDateBetween(LocalDateTime.parse(fromTime), LocalDateTime.parse(toTime)), HttpStatus.OK);
+    public ResponseEntity<Iterable<Transaction>>findAllByCreatedDateBetween(@RequestParam LocalDateTime fromTime,@RequestParam LocalDateTime toTime){
+        return new ResponseEntity<>(transactionService.findAllByCreatedDateBetween(fromTime, toTime), HttpStatus.OK);
     }
     @GetMapping("/findAllByWalletAndCreatedDateBetween/{id}")
     public ResponseEntity<Iterable<Transaction>>findAllByWalletAndCreatedDateBetween(@RequestParam Long id,@RequestParam String fromTime,@RequestParam String toTime){
