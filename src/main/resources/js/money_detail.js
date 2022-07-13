@@ -33,7 +33,7 @@ function showAllMoneyDetail(data) {
             'Content-Type': 'application/json'
         },
         type: "GET",
-        url: "http://localhost:8000/money_details",
+        url: "http://localhost:8000/users/money_details",
         success: function (moneyDetail) {
             let content = "";
             for (let i = 0; i < moneyDetail.length; i++) {
@@ -52,9 +52,8 @@ function showAllMoneyDetailIndex() {
             'Content-Type': 'application/json'
         },
         type: "GET",
-        url: "http://localhost:8000/money_details",
+        url: "http://localhost:8000/users/money_details",
         success: function (moneyDetail) {
-            console.log(moneyDetail)
             let content = ``;
             content += `<li><a onclick="findAllTransactionByWallet()">All</a></li>`;
             for (let i = 0; i < moneyDetail.length; i++) {
