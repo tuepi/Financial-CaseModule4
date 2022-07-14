@@ -32,4 +32,9 @@ public interface ITransactionRepository extends JpaRepository<Transaction, Long>
             " join wallet w on w.id = t.wallet_id where t.id =: id" , nativeQuery = true)
     Integer getMoneyCategoryByTransactionId(@Param("id")Long money_category_id);
 
+    @Query(value = "select transaction.id, transaction.created_date,transaction.money_category_id,transaction.money_detail_id,transaction.wallet_id,transaction.money_amount, transaction.note, wallet.name ,user_table.username from transaction\n" +
+            "    join wallet on transaction.wallet_id = wallet.id\n" +
+            "    join user_table on  user_table.id = wallet.user_id\n" +
+            "where user_table.id = :user_id",nativeQuery = true)
+    Iterable<Transaction> findAllByUserId(@Param("user_id") Long user_id);
 }

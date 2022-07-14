@@ -14,7 +14,7 @@ function addCategory() {
             "Content-Type": 'application/json',
         },
         type: "POST",
-        url: "http://localhost:8000/users/money_categories",
+        url: "http://localhost:8000/money_categories",
         data: JSON.stringify(category),
         success : function () {
             $('#modalAddCategoryForm').modal('hide');
@@ -35,7 +35,7 @@ function showAllCategory() {
             'Content-Type': 'application/json'
         },
         type: "GET",
-        url: "http://localhost:8000/users/money_categories" ,
+        url: "http://localhost:8000/money_categories" ,
         success: function (moneyCategory) {
             let content = ``;
             for (let i = 0; i < moneyCategory.length; i++) {
@@ -57,7 +57,7 @@ function showMoneyCategory(id) {
             "Content-Type": 'application/json',
         },
         type: "GET",
-        url: "http://localhost:8000/users/money_categories/find-by-category-id/" + id,
+        url: "http://localhost:8000/money_categories/find-by-category-id/" + id,
         success : function (data) {
             document.getElementById("showNameCategory").innerHTML = `<div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold" style="color: #28b498">Category</h4>
@@ -99,7 +99,7 @@ function editCategory() {
             "Content-Type": 'application/json',
         },
         type: "PUT",
-        url: "http://localhost:8000/users/money_categories/" + idEdit ,
+        url: "http://localhost:8000/money_categories/" + idEdit ,
         data: JSON.stringify(moneyCategory),
         success : function () {
             showAllCategory();
@@ -123,7 +123,7 @@ function deleteCategory() {
             Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
         },
         type: "DELETE",
-        url: "http://localhost:8000/users/money_categories/" + id,
+        url: "http://localhost:8000/money_categories/" + id,
         success: function () {
             $("#myModal").modal('show');
             setTimeout(function () {

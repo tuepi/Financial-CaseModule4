@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/users/money_categories")
+@RequestMapping("/money_categories")
 public class CategoryController {
         @Autowired
         IMoneyCategoryService categoryService;

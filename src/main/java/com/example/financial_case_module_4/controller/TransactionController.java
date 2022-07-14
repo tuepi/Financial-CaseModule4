@@ -1,6 +1,7 @@
 package com.example.financial_case_module_4.controller;
 
 import com.example.financial_case_module_4.model.*;
+import com.example.financial_case_module_4.service.login.UserService;
 import com.example.financial_case_module_4.service.moneyCategory.IMoneyCategoryService;
 import com.example.financial_case_module_4.service.moneyDetail.IMoneyDetailService;
 import com.example.financial_case_module_4.service.transaction.ITransactionService;
@@ -27,13 +28,12 @@ public class TransactionController {
     IWalletService walletService;
     @Autowired
     IMoneyCategoryService categoryService;
-    @GetMapping
-    public ResponseEntity<Iterable<Transaction>> findAllTransactionByWallet() {
-        List<Transaction> transactions = (List<Transaction>) transactionService.findAll();
-        if (transactions.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(transactions, HttpStatus.OK);
+    @Autowired
+    UserService userService;
+    @GetMapping("userId/{id}")
+    public ResponseEntity<Iterable<Transaction>> findAllTransactionByWallet(@PathVariable Long id) {
+        transactionService.findAllByUserId(id);
+        return new ResponseEntity<>(transactionService.findAllByUserId(id), HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> findTransactionById(@PathVariable Long id) {
@@ -124,7 +124,7 @@ public class TransactionController {
     }
 
     @GetMapping("/findAllByCreatedDate")
-    public ResponseEntity<Iterable<Transaction>>findAllByCreatedDateBetween(@RequestParam("formTime") String fromTime,@RequestParam("toTime") String toTime){
+    public ResponseEntity<Iterable<Transaction>>findAllByCreatedDateBetween(@RequestParam("fromTime") String fromTime,@RequestParam("toTime") String toTime){
         if(fromTime.equals("") && toTime.equals("")){
             fromTime = "1900-01-01T00:00:00";
             toTime = String.valueOf(LocalDateTime.now());

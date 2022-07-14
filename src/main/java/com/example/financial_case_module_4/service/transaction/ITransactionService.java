@@ -15,4 +15,5 @@ public interface ITransactionService extends IGeneralService<Transaction> {
     Iterable<Transaction> findAllByMoneyCategory_Id(Long id);
     Double getAllByMoneyAmount(Long money_detail_id);
     Double getAllByMoneyAmount();
+    Iterable<Transaction> findAllByUserId(Long id);
 }

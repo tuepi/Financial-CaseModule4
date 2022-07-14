@@ -16,7 +16,6 @@ function login() {
         data: JSON.stringify(logInForm),
         contentType: 'application/json; charset=utf8',
         success: function (data) {
-            console.log(data)
             window.sessionStorage.removeItem('TOKEN_KEY');
             window.sessionStorage.setItem('TOKEN_KEY', data.accessToken);
             window.sessionStorage.removeItem('NAME_KEY');

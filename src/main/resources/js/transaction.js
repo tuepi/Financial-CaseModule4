@@ -10,7 +10,7 @@ function findAllTransactionByWallet() {
             'Content-Type': 'application/json'
         },
         type: "GET",
-        url: "http://localhost:8000/transactions",
+        url: "http://localhost:8000/transactions/userId/"+window.sessionStorage.getItem('ID_USER_KEY'),
         success: function (data) {
             let content = `<h3 onclick="showAllWallet()">Back to wallet</h3>
                             <button onclick="showAddTransactionNoChoice()">Add Transaction</button>
@@ -412,10 +412,6 @@ function findAllByTime() {
     console.log(from)
     console.log(to)
     $.ajax({
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
         type: "GET",
         url: "http://localhost:8000/transactions/findAllByCreatedDate?fromTime=" + from +"&toTime=" + to,
         success : function (data) {
