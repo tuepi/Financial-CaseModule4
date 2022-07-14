@@ -11,7 +11,6 @@ public class Wallet {
     @NotBlank(message = "ko de trong dm!!")
     private String name;
     private double moneyAmount;
-    private String icon;
     @ManyToOne
     private MoneyType moneyType;
     @ManyToOne
@@ -23,7 +22,6 @@ public class Wallet {
     public Wallet( String name, double moneyAmount, String icon, MoneyType moneyType, User user) {
         this.name = name;
         this.moneyAmount = moneyAmount;
-        this.icon = icon;
         this.moneyType = moneyType;
         this.user = user;
     }
@@ -52,13 +50,6 @@ public class Wallet {
         this.moneyAmount = moneyAmount;
     }
 
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
 
     public MoneyType getMoneyType() {
         return moneyType;

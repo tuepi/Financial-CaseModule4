@@ -8,7 +8,7 @@ function showAllWallet() {
         type: "GET",
         url: "http://localhost:8000/wallets/users/findByUser/" + window.sessionStorage.getItem("ID_USER_KEY"),
         success: function (data) {
-            let content = ``;
+            let content = `<h4 onclick="showAddOnlyMoney()" class="btn btn-secondary">Add money</h4>`;
             for (let i = 0; i < data.length; i++) {
                 content += `<div  class="col-lg-4 col-md-12" style="padding-top: 50px">
                         <div class="white-box analytics-info">
@@ -77,9 +77,10 @@ function editWallet() {
             "Content-Type": 'application/json',
         },
         type: "PUT",
-        url: "http://localhost:8000/wallets/" + idEdit ,
+        url: "http://localhost:8000/wallets/" + idEdit +"?moneyOnly="+0 ,
         data: JSON.stringify(wallet),
-        success : function () {
+        success : function (data) {
+            console.log(data)
             $('#modalEditWalletForm').modal('hide');
             $("#myModal").modal('show');
             setTimeout(function () {
@@ -116,8 +117,11 @@ function acceptModal() {
 
 function showMoneyTypeAll(data) {
     $.ajax({
+        headers : {
+            Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
+        },
         type: "GET",
-        url: "http://localhost:8000/wallets/users/showMoneyType",
+        url: "http://localhost:8000/wallets/showMoneyType",
         success: function (moneyType) {
             console.log(moneyType)
             let str = ""
@@ -155,6 +159,7 @@ function addWallet() {
     console.log(wallet);
     $.ajax({
         headers: {
+            Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
             "Accept": 'application/json',
             "Content-Type": 'application/json',
         },
@@ -163,6 +168,47 @@ function addWallet() {
         data: JSON.stringify(wallet),
         success : function () {
             $('#modalAddWalletForm').modal('hide');
+            $("#myModal").modal('show');
+            setTimeout(function () {
+                $("#myModal").modal('hide');
+            }, 1000);
+            showAllWallet();
+        }
+    })
+}
+
+function showAddOnlyMoney() {
+    $('#modalAddMoneyForm').modal('show')
+    let showWallet = document.getElementById("selectWalletOnly")
+    let showModal = document.getElementById("selectMoneyTypeOnly")
+    showAllWalletTransaction(showWallet);
+    showMoneyTypeAll(showModal);
+}
+
+function addOnlyMoney() {
+    let money_amount = document.getElementById("moneyOnly").value;
+    let wallet_id = document.getElementById("selectWalletOnly").value;
+    let type = document.getElementById("selectMoneyTypeOnly").value;
+    let userId = window.sessionStorage.getItem('ID_USER_KEY');
+    let wallet = {
+        moneyType : {
+            id: type
+        },
+        user : {
+            id: userId
+        }
+    }
+    $.ajax({
+        headers: {
+            Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
+            "Accept": 'application/json',
+            "Content-Type": 'application/json',
+        },
+        type: "PUT",
+        url: "http://localhost:8000/wallets/add/" + wallet_id + "?moneyOnly="  + money_amount,
+        data: JSON.stringify(wallet),
+        success : function () {
+            $('#modalAddMoneyForm').modal('hide');
             $("#myModal").modal('show');
             setTimeout(function () {
                 $("#myModal").modal('hide');

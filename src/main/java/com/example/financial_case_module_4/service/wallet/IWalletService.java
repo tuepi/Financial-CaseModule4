@@ -5,6 +5,7 @@ import com.example.financial_case_module_4.model.Wallet;
 import com.example.financial_case_module_4.service.IGeneralService;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IWalletService extends IGeneralService<Wallet> {
     Iterable<Wallet>findAllByNameContaining(String name);

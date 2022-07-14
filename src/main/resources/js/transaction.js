@@ -10,7 +10,7 @@ function findAllTransactionByWallet() {
             'Content-Type': 'application/json'
         },
         type: "GET",
-        url: "http://localhost:8000/transactions",
+        url: "http://localhost:8000/transactions/userId/"+window.sessionStorage.getItem('ID_USER_KEY'),
         success: function (data) {
             let content = `<h3 onclick="showAllWallet()">Back to wallet</h3>
                             <button onclick="showAddTransactionNoChoice()">Add Transaction</button>
@@ -70,6 +70,7 @@ function findAllTransactionByWalletId(id) {
         url: "http://localhost:8000/transactions/findAllByWallet/" + id,
         success: function (data) {
             dataMoneyDetail(data);
+            walletId = id;
         }
     })
 }
@@ -238,7 +239,6 @@ function addTransaction() {
     console.log(transaction)
     $.ajax({
         headers: {
-            Authorization: 'Bearer ' + window.sessionStorage.getItem("TOKEN_KEY"),
             "Accept": 'application/json',
             "Content-Type": 'application/json',
         },
@@ -402,6 +402,20 @@ function acceptModal1() {
             findAllTransactionByWallet()
             transaction_id = 0;
             old_money_amount =0;
+        }
+    })
+}
+
+function findAllByTime() {
+    let from = $("#formTime").val();
+    let to = $("#toTime").val();
+    console.log(from)
+    console.log(to)
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8000/transactions/findAllByCreatedDate?fromTime=" + from +"&toTime=" + to,
+        success : function (data) {
+            dataMoneyDetail(data);
         }
     })
 }

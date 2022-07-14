@@ -64,6 +64,21 @@ public class WalletController {
         wallet.setId(walletOptional.get().getId());
         return new ResponseEntity<>(walletService.save(wallet), HttpStatus.OK);
     }
+    @PutMapping("/add/{id}")
+    public ResponseEntity<Wallet> addMoney(@PathVariable Long id, @RequestBody Wallet wallet,@RequestParam("moneyOnly") Double money) {
+        Optional<Wallet> walletOptional = walletService.findById(id);
+        if (!walletOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        wallet.setId(walletOptional.get().getId());
+        wallet.setName(walletOptional.get().getName());
+        if (money != 0){
+            wallet.setMoneyAmount(walletOptional.get().getMoneyAmount() + money);
+        }else {
+            wallet.setMoneyAmount(walletOptional.get().getMoneyAmount());
+        }
+        return new ResponseEntity<>(walletService.save(wallet), HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Wallet> deleteWallet(@PathVariable Long id) {
         Optional<Wallet> walletOptional = walletService.findById(id);
@@ -82,7 +97,7 @@ public class WalletController {
         return new ResponseEntity<>(wallets, HttpStatus.OK);
     }
 
-    @GetMapping("/users/showMoneyType")
+    @GetMapping("/showMoneyType")
     public ResponseEntity<Iterable<MoneyType>> showMoneyType() {
         Iterable<MoneyType> moneyTypes = moneyTypeService.findAll();
         return new ResponseEntity<>(moneyTypes, HttpStatus.OK);

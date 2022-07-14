@@ -16,7 +16,6 @@ function login() {
         data: JSON.stringify(logInForm),
         contentType: 'application/json; charset=utf8',
         success: function (data) {
-            console.log(data)
             window.sessionStorage.removeItem('TOKEN_KEY');
             window.sessionStorage.setItem('TOKEN_KEY', data.accessToken);
             window.sessionStorage.removeItem('NAME_KEY');
@@ -38,6 +37,8 @@ function login() {
             profile()
             // showAllWallet();
             showAllWallet();
+            showAllMoneyDetailIndex();
+            showAllCategory()
         }
     })
 }
@@ -83,6 +84,8 @@ function logout() {
     window.sessionStorage.clear();
     window.sessionStorage.removeItem("TOKEN_KEY")
     document.getElementById("display").innerHTML = "";
+    document.getElementById("showCategory").innerHTML = "";
+    document.getElementById("homeSubmenu").innerHTML = "";
     profile()
     $("#modalLoginForm").modal('show');
 }

@@ -64,4 +64,9 @@ public class TransactionService implements ITransactionService{
         return transactionRepository.getAllByMoneyAmount();
     }
 
+    @Override
+    public Iterable<Transaction> findAllByUserId(Long id) {
+        return transactionRepository.findAllByUserId(id);
+    }
+
 }

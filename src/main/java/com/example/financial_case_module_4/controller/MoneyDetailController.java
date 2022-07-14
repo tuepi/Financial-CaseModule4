@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/money_details")
+@RequestMapping("/users/money_details")
 public class MoneyDetailController {
     @Autowired
     IMoneyDetailService moneyDetailService;
